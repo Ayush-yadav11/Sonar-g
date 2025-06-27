@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. */
+
+@layer base {
+  :root {
+    /* Light Theme - Custom Gold App Colors */
+    --background: 0 0% 98%;  /* #FAFAFA */
+    --foreground: 0 0% 7%;   /* #111111 */
+
+    --card: 0 0% 100%;       /* #FFFFFF */
+    --card-foreground: 0 0% 7%; /* #111111 */
+
+    --popover: 0 0% 100%;    /* #FFFFFF */
+    --popover-foreground: 0 0% 7%; /* #111111 */
+
+    --primary: 43 77% 52%;   /* #D4AF37 - Gold accent */
+    --primary-foreground: 0 0% 100%; /* White text on gold */
+
+    --secondary: 0 0% 94%;   /* #F0F0F0 - Background secondary */
+    --secondary-foreground: 0 0% 33%; /* #555555 - Text secondary */
+
+    --muted: 0 0% 94%;       /* #F0F0F0 */
+    --muted-foreground: 0 0% 33%; /* #555555 */
+
+    --accent: 43 77% 52%;    /* #D4AF37 - Gold accent */
+    --accent-foreground: 0 0% 100%; /* White text on gold */
+
+    --destructive: 354 70% 54%; /* #D32F2F - Error red */
+    --destructive-foreground: 0 0% 100%; /* White text */
+
+    --success: 142 71% 45%;  /* #28A745 - Success green */
+    --warning: 45 100% 50%;  /* #FFB300 - Warning amber */
+    --link: 215 100% 41%;    /* #0056D2 - Link blue */
+    
+    --border: 0 0% 88%;      /* #E0E0E0 */
+    --input: 0 0% 88%;       /* #E0E0E0 */
+    --ring: 43 77% 52%;      /* #D4AF37 - Gold accent for focus rings */
+
+    --radius: 0.5rem;
+
+    /* Custom App Colors - Light Theme */
+    --app-background: 0 0% 98%;          /* #FAFAFA */
+    --app-background-secondary: 0 0% 94%; /* #F0F0F0 */
+    --app-text-primary: 0 0% 7%;         /* #111111 */
+    --app-text-secondary: 0 0% 33%;      /* #555555 */
+    --app-accent-gold: 43 77% 52%;       /* #D4AF37 */
+    --app-accent-hover: 43 70% 45%;      /* #BFA334 */
+
+    /* Sidebar colors for light theme */
+    --sidebar-background: 0 0% 100%;     /* #FFFFFF */
+    --sidebar-foreground: 0 0% 7%;       /* #111111 */
+    --sidebar-primary: 43 77% 52%;       /* #D4AF37 - Gold */
+    --sidebar-primary-foreground: 0 0% 100%; /* White */
+    --sidebar-accent: 0 0% 94%;          /* #F0F0F0 */
+    --sidebar-accent-foreground: 0 0% 7%; /* #111111 */
+    --sidebar-border: 0 0% 88%;          /* #E0E0E0 */
+    --sidebar-ring: 43 77% 52%;          /* #D4AF37 - Gold */
+  }
+
+  .dark {
+    /* Dark Theme - Custom Gold App Colors */
+    --background: 0 0% 7%;   /* #121212 */
+    --foreground: 0 0% 92%;  /* #EAEAEA */
+
+    --card: 0 0% 18%;        /* #2F2F2F */
+    --card-foreground: 0 0% 92%; /* #EAEAEA */
+
+    --popover: 0 0% 18%;     /* #2F2F2F */
+    --popover-foreground: 0 0% 92%; /* #EAEAEA */
+
+    --primary: 43 77% 52%;   /* #D4AF37 - Gold accent (same in both themes) */
+    --primary-foreground: 0 0% 7%; /* Dark text on gold */
+
+    --secondary: 0 0% 12%;   /* #1E1E1E - Background secondary */
+    --secondary-foreground: 0 0% 67%; /* #AAAAAA - Text secondary */
+
+    --muted: 0 0% 12%;       /* #1E1E1E */
+    --muted-foreground: 0 0% 67%; /* #AAAAAA */
+
+    --accent: 51 100% 50%;   /* #FFD700 - Gold accent hover */
+    --accent-foreground: 0 0% 7%; /* Dark text on bright gold */
+
+    --destructive: 4 90% 58%; /* #E53935 - Error red */
+    --destructive-foreground: 0 0% 100%; /* White text */
+
+    --success: 162 60% 51%;  /* #38C172 - Success green */
+    --warning: 48 95% 58%;   /* #F4C430 - Warning amber */
+    --link: 210 100% 70%;    /* #66B2FF - Link blue */
+
+    --border: 0 0% 23%;      /* #3A3A3A */
+    --input: 0 0% 23%;       /* #3A3A3A */
+    --ring: 51 100% 50%;     /* #FFD700 - Bright gold for focus rings */
+
+    /* Custom App Colors - Dark Theme */
+    --app-background: 0 0% 7%;           /* #121212 */
+    --app-background-secondary: 0 0% 12%; /* #1E1E1E */
+    --app-text-primary: 0 0% 92%;        /* #EAEAEA */
+    --app-text-secondary: 0 0% 67%;      /* #AAAAAA */
+    --app-accent-gold: 43 77% 52%;       /* #D4AF37 */
+    --app-accent-hover: 51 100% 50%;     /* #FFD700 */
+
+    /* Sidebar colors for dark theme */
+    --sidebar-background: 0 0% 7%;       /* #121212 */
+    --sidebar-foreground: 0 0% 92%;      /* #EAEAEA */
+    --sidebar-primary: 51 100% 50%;      /* #FFD700 - Bright gold */
+    --sidebar-primary-foreground: 0 0% 7%; /* Dark text */
+    --sidebar-accent: 0 0% 12%;          /* #1E1E1E */
+    --sidebar-accent-foreground: 0 0% 92%; /* #EAEAEA */
+    --sidebar-border: 0 0% 23%;          /* #3A3A3A */
+    --sidebar-ring: 51 100% 50%;         /* #FFD700 - Bright gold */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

@@ -1,4 +1,4 @@
-# Golden Future Glance 🏆
+# Sonar g
 
 A sophisticated gold price prediction model with real-time tracking dashboard, featuring advanced machine learning algorithms and a stunning golden-themed UI for professional gold market analysis.
 

@@ -149,14 +149,16 @@ export const ScenarioAnalysis: React.FC<ScenarioAnalysisProps> = ({ currentPrice
   };
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-yellow-500/20 p-6">
+    <div className="bg-app-theme-cream rounded-xl border border-app-theme-yellow/20 p-6">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-          <Calculator size={20} className="text-white" />
+        <div className="w-10 h-10 bg-app-theme-yellow/20 rounded-xl flex items-center justify-center">
+          <div className="w-6 h-6 bg-gradient-theme-warm rounded-lg flex items-center justify-center">
+            <Calculator size={14} className="text-white" />
+          </div>
         </div>
         <div>
-          <h3 className="text-xl font-bold text-white">Scenario Analysis</h3>
-          <p className="text-slate-400 text-sm">Market event impact modeling</p>
+          <h3 className="text-xl font-bold text-app-neutral-900">Scenario Analysis</h3>
+          <p className="text-app-neutral-600 text-sm">Market event impact modeling</p>
         </div>
       </div>
 
@@ -175,36 +177,46 @@ export const ScenarioAnalysis: React.FC<ScenarioAnalysisProps> = ({ currentPrice
               return (
                 <div 
                   key={scenario.id}
-                  className={`p-4 rounded-lg border ${getImpactColor(scenario.impact)} hover:bg-opacity-20 transition-colors`}
+                  className={`p-4 rounded-lg border ${
+                    scenario.impact === 'positive' 
+                      ? 'border-success-DEFAULT/30 bg-success-DEFAULT/10' 
+                      : scenario.impact === 'negative'
+                      ? 'border-destructive-DEFAULT/30 bg-destructive-DEFAULT/10'
+                      : 'border-app-theme-yellow/30 bg-app-theme-yellow/10'
+                  } hover:bg-opacity-20 transition-colors`}
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center space-x-2">
                       {getImpactIcon(scenario.impact)}
-                      <h4 className="font-semibold text-white">{scenario.name}</h4>
+                      <h4 className="font-semibold text-app-neutral-900">{scenario.name}</h4>
                     </div>
                     <div className="text-right">
-                      <div className={`text-sm font-medium ${getProbabilityColor(scenario.probability)}`}>
+                      <div className={`text-sm font-medium ${
+                        scenario.probability >= 0.6 ? 'text-success-DEFAULT' :
+                        scenario.probability >= 0.4 ? 'text-app-theme-orange' :
+                        'text-destructive-DEFAULT'
+                      }`}>
                         {(scenario.probability * 100).toFixed(0)}% chance
                       </div>
-                      <div className="text-xs text-slate-400">{scenario.timeframe}</div>
+                      <div className="text-xs text-app-neutral-600">{scenario.timeframe}</div>
                     </div>
                   </div>
 
-                  <p className="text-slate-300 text-sm mb-3">{scenario.description}</p>
+                  <p className="text-app-neutral-700 text-sm mb-3">{scenario.description}</p>
 
                   <div className="grid grid-cols-3 gap-4">
                     <div>
-                      <div className="text-slate-400 text-xs">Current Price</div>
-                      <div className="text-white font-semibold">${currentPrice.toFixed(2)}</div>
+                      <div className="text-app-neutral-600 text-xs">Current Price</div>
+                      <div className="text-app-neutral-900 font-semibold">${currentPrice.toFixed(2)}</div>
                     </div>
                     <div>
-                      <div className="text-slate-400 text-xs">Projected Price</div>
-                      <div className="text-white font-semibold">${projectedPrice.toFixed(2)}</div>
+                      <div className="text-app-neutral-600 text-xs">Projected Price</div>
+                      <div className="text-app-neutral-900 font-semibold">${projectedPrice.toFixed(2)}</div>
                     </div>
                     <div>
-                      <div className="text-slate-400 text-xs">Impact</div>
+                      <div className="text-app-neutral-600 text-xs">Impact</div>
                       <div className={`font-semibold ${
-                        scenario.priceChange >= 0 ? 'text-green-400' : 'text-red-400'
+                        scenario.priceChange >= 0 ? 'text-success-DEFAULT' : 'text-destructive-DEFAULT'
                       }`}>
                         {scenario.priceChange >= 0 ? '+' : ''}{percentChange.toFixed(1)}%
                       </div>
@@ -217,10 +229,10 @@ export const ScenarioAnalysis: React.FC<ScenarioAnalysisProps> = ({ currentPrice
         </TabsContent>
 
         <TabsContent value="custom">
-          <Card className="p-4">
+          <Card className="bg-white border border-app-theme-yellow/20 p-4">
             <div className="space-y-6">
               <div>
-                <label className="text-sm text-slate-300 mb-2 block">Interest Rate Change (%)</label>
+                <label className="text-sm text-app-neutral-700 mb-2 block">Interest Rate Change (%)</label>
                 <Input
                   type="number"
                   value={customScenario.interest_rate_change}
@@ -228,12 +240,12 @@ export const ScenarioAnalysis: React.FC<ScenarioAnalysisProps> = ({ currentPrice
                   min="-5"
                   max="5"
                   step="0.25"
-                  className="w-full"
+                  className="border-app-theme-yellow/20 focus:border-app-theme-yellow"
                 />
               </div>
 
               <div>
-                <label className="text-sm text-slate-300 mb-2 block">Inflation Change (%)</label>
+                <label className="text-sm text-app-neutral-700 mb-2 block">Inflation Change (%)</label>
                 <Input
                   type="number"
                   value={customScenario.inflation_change}
@@ -241,12 +253,12 @@ export const ScenarioAnalysis: React.FC<ScenarioAnalysisProps> = ({ currentPrice
                   min="-5"
                   max="10"
                   step="0.25"
-                  className="w-full"
+                  className="border-app-theme-yellow/20 focus:border-app-theme-yellow"
                 />
               </div>
 
               <div>
-                <label className="text-sm text-slate-300 mb-2 block">Dollar Strength Change (%)</label>
+                <label className="text-sm text-app-neutral-700 mb-2 block">Dollar Strength Change (%)</label>
                 <Input
                   type="number"
                   value={customScenario.dollar_strength_change}
@@ -254,61 +266,61 @@ export const ScenarioAnalysis: React.FC<ScenarioAnalysisProps> = ({ currentPrice
                   min="-20"
                   max="20"
                   step="1"
-                  className="w-full"
+                  className="border-app-theme-yellow/20 focus:border-app-theme-yellow"
                 />
               </div>
 
               <div>
-                <label className="text-sm text-slate-300 mb-2 block">Market Volatility (0-100)</label>
+                <label className="text-sm text-app-neutral-700 mb-2 block">Market Volatility (0-100)</label>
                 <Slider
                   value={[customScenario.market_volatility]}
                   onValueChange={(value) => handleCustomScenarioChange('market_volatility', value[0])}
                   min={0}
                   max={100}
                   step={1}
-                  className="w-full"
+                  className="w-full border-app-theme-yellow/20 focus:border-app-theme-yellow"
                 />
               </div>
 
               <div>
-                <label className="text-sm text-slate-300 mb-2 block">Geopolitical Risk (0-100)</label>
+                <label className="text-sm text-app-neutral-700 mb-2 block">Geopolitical Risk (0-100)</label>
                 <Slider
                   value={[customScenario.geopolitical_risk]}
                   onValueChange={(value) => handleCustomScenarioChange('geopolitical_risk', value[0])}
                   min={0}
                   max={100}
                   step={1}
-                  className="w-full"
+                  className="w-full border-app-theme-yellow/20 focus:border-app-theme-yellow"
                 />
               </div>
 
               <div>
-                <label className="text-sm text-slate-300 mb-2 block">Prediction Days</label>
+                <label className="text-sm text-app-neutral-700 mb-2 block">Prediction Days</label>
                 <Input
                   type="number"
                   value={customScenario.days}
                   onChange={(e) => handleCustomScenarioChange('days', parseInt(e.target.value))}
                   min="1"
                   max="30"
-                  className="w-full"
+                  className="border-app-theme-yellow/20 focus:border-app-theme-yellow"
                 />
               </div>
 
               <Button 
                 onClick={runCustomSimulation} 
                 disabled={isLoading}
-                className="w-full"
+                className="w-full bg-app-theme-yellow hover:bg-app-theme-orange text-app-neutral-900"
               >
                 {isLoading ? 'Running Simulation...' : 'Run Custom Simulation'}
               </Button>
 
               {error && (
-                <div className="text-red-400 text-sm mt-2">{error}</div>
+                <div className="text-destructive-DEFAULT text-sm mt-2">{error}</div>
               )}
 
               {simulationResults && (
                 <div className="mt-6">
-                  <h4 className="text-white font-semibold mb-4">Simulation Results</h4>
+                  <h4 className="text-app-neutral-900 font-semibold mb-4">Simulation Results</h4>
                   <div className="w-full h-[300px]">
                     <ResponsiveContainer>
                       <RechartsLineChart data={simulationResults.dates.map((date, i) => ({
@@ -316,21 +328,21 @@ export const ScenarioAnalysis: React.FC<ScenarioAnalysisProps> = ({ currentPrice
                         base: simulationResults.base_predictions[i],
                         scenario: simulationResults.scenario_predictions[i]
                       }))}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="date" />
-                        <YAxis />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
+                        <XAxis dataKey="date" stroke="#171717" />
+                        <YAxis stroke="#171717" />
                         <Tooltip />
                         <Legend />
                         <Line 
                           type="monotone" 
                           dataKey="base" 
-                          stroke="#8884d8" 
+                          stroke="#F3C623" 
                           name="Base Prediction" 
                         />
                         <Line 
                           type="monotone" 
                           dataKey="scenario" 
-                          stroke="#82ca9d" 
+                          stroke="#FA812F" 
                           name="Scenario Prediction" 
                         />
                       </RechartsLineChart>
@@ -343,9 +355,9 @@ export const ScenarioAnalysis: React.FC<ScenarioAnalysisProps> = ({ currentPrice
         </TabsContent>
       </Tabs>
 
-      <div className="mt-6 p-4 bg-slate-700/30 rounded-lg">
-        <div className="text-sm text-slate-400 mb-2">Scenario Analysis Notes</div>
-        <div className="text-xs text-slate-500">
+      <div className="mt-6 p-4 bg-white rounded-lg border border-app-theme-yellow/20">
+        <div className="text-sm text-app-neutral-700 mb-2">Scenario Analysis Notes</div>
+        <div className="text-xs text-app-neutral-600">
           Predictions are based on historical data, current market conditions, and scenario parameters.
           The model takes into account various economic factors and their correlations with gold prices.
           These are estimates and actual outcomes may vary significantly.

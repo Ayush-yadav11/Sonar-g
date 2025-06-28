@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Activity, Zap, Clock } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, Tooltip } from 'recharts';
@@ -68,9 +67,9 @@ export const HighFrequencyData: React.FC<HighFrequencyDataProps> = ({ currentPri
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-slate-800/95 backdrop-blur-sm border border-yellow-500/30 rounded-lg p-3">
-          <p className="text-yellow-400 font-medium">{label}</p>
-          <p className="text-white">
+        <div className="bg-white border border-app-theme-yellow/20 rounded-lg p-3">
+          <p className="text-app-theme-orange font-medium">{label}</p>
+          <p className="text-app-neutral-900">
             Price: <span className="font-bold">${payload[0].value.toFixed(2)}</span>
           </p>
         </div>
@@ -80,29 +79,31 @@ export const HighFrequencyData: React.FC<HighFrequencyDataProps> = ({ currentPri
   };
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-yellow-500/20 p-6">
+    <div className="bg-app-theme-cream rounded-xl border border-app-theme-yellow/20 p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center">
-            <Zap size={20} className="text-white" />
+          <div className="w-10 h-10 bg-app-theme-yellow/20 rounded-xl flex items-center justify-center">
+            <div className="w-6 h-6 bg-gradient-theme-warm rounded-lg flex items-center justify-center">
+              <Zap size={14} className="text-white" />
+            </div>
           </div>
           <div>
-            <h3 className="text-xl font-bold text-white">High-Frequency Data</h3>
-            <p className="text-slate-400 text-sm">Real-time tick data & order book</p>
+            <h3 className="text-xl font-bold text-app-neutral-900">High-Frequency Data</h3>
+            <p className="text-app-neutral-600 text-sm">Real-time tick data & order book</p>
           </div>
         </div>
         
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-2">
-            <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-green-400 animate-pulse' : 'bg-gray-400'}`} />
-            <span className="text-sm text-slate-400">{isLive ? 'LIVE' : 'PAUSED'}</span>
+            <div className={`w-2 h-2 rounded-full ${isLive ? 'bg-success-DEFAULT animate-pulse' : 'bg-app-neutral-400'}`} />
+            <span className="text-sm text-app-neutral-600">{isLive ? 'LIVE' : 'PAUSED'}</span>
           </div>
           <button
             onClick={() => setIsLive(!isLive)}
             className={`px-3 py-1 rounded-lg text-sm font-medium transition-colors ${
               isLive 
-                ? 'bg-red-500/20 text-red-400 hover:bg-red-500/30' 
-                : 'bg-green-500/20 text-green-400 hover:bg-green-500/30'
+                ? 'bg-destructive-DEFAULT/20 text-destructive-DEFAULT hover:bg-destructive-DEFAULT/30' 
+                : 'bg-success-DEFAULT/20 text-success-DEFAULT hover:bg-success-DEFAULT/30'
             }`}
           >
             {isLive ? 'Pause' : 'Resume'}
@@ -112,13 +113,13 @@ export const HighFrequencyData: React.FC<HighFrequencyDataProps> = ({ currentPri
 
       {/* Frequency Control */}
       <div className="mb-6">
-        <label className="block text-sm font-medium text-slate-300 mb-2">
+        <label className="block text-sm font-medium text-app-neutral-700 mb-2">
           Update Frequency
         </label>
         <select
           value={updateFrequency}
           onChange={(e) => setUpdateFrequency(parseInt(e.target.value))}
-          className="bg-slate-600 text-white rounded-lg px-3 py-2 text-sm"
+          className="bg-white border border-app-theme-yellow/20 text-app-neutral-900 rounded-lg px-3 py-2 text-sm"
         >
           <option value={100}>100ms (Ultra High)</option>
           <option value={500}>500ms (High)</option>
@@ -129,61 +130,61 @@ export const HighFrequencyData: React.FC<HighFrequencyDataProps> = ({ currentPri
 
       {/* Market Metrics */}
       <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-slate-700/30 rounded-lg p-3">
+        <div className="bg-white rounded-lg border border-app-theme-yellow/20 p-3">
           <div className="flex items-center space-x-2 mb-1">
-            <Activity size={14} className="text-emerald-400" />
-            <span className="text-xs text-slate-400">Last Price</span>
+            <Activity size={14} className="text-app-theme-orange" />
+            <span className="text-xs text-app-neutral-600">Last Price</span>
           </div>
-          <div className="text-lg font-bold text-white">
+          <div className="text-lg font-bold text-app-neutral-900">
             ${tickData.length > 0 ? tickData[tickData.length - 1].price.toFixed(2) : currentPrice.toFixed(2)}
           </div>
-          <div className={`text-xs ${priceChange >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+          <div className={`text-xs ${priceChange >= 0 ? 'text-success-DEFAULT' : 'text-destructive-DEFAULT'}`}>
             {priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)}
           </div>
         </div>
 
-        <div className="bg-slate-700/30 rounded-lg p-3">
+        <div className="bg-white rounded-lg border border-app-theme-yellow/20 p-3">
           <div className="flex items-center space-x-2 mb-1">
-            <Clock size={14} className="text-blue-400" />
-            <span className="text-xs text-slate-400">Avg Spread</span>
+            <Clock size={14} className="text-app-theme-orange" />
+            <span className="text-xs text-app-neutral-600">Avg Spread</span>
           </div>
-          <div className="text-lg font-bold text-white">${averageSpread.toFixed(2)}</div>
-          <div className="text-xs text-slate-400">Last 20 ticks</div>
+          <div className="text-lg font-bold text-app-neutral-900">${averageSpread.toFixed(2)}</div>
+          <div className="text-xs text-app-neutral-600">Last 20 ticks</div>
         </div>
 
-        <div className="bg-slate-700/30 rounded-lg p-3">
+        <div className="bg-white rounded-lg border border-app-theme-yellow/20 p-3">
           <div className="flex items-center space-x-2 mb-1">
-            <Activity size={14} className="text-purple-400" />
-            <span className="text-xs text-slate-400">Avg Volume</span>
+            <Activity size={14} className="text-app-theme-orange" />
+            <span className="text-xs text-app-neutral-600">Avg Volume</span>
           </div>
-          <div className="text-lg font-bold text-white">{Math.round(averageVolume)}</div>
-          <div className="text-xs text-slate-400">oz/tick</div>
+          <div className="text-lg font-bold text-app-neutral-900">{Math.round(averageVolume)}</div>
+          <div className="text-xs text-app-neutral-600">oz/tick</div>
         </div>
 
-        <div className="bg-slate-700/30 rounded-lg p-3">
+        <div className="bg-white rounded-lg border border-app-theme-yellow/20 p-3">
           <div className="flex items-center space-x-2 mb-1">
-            <Zap size={14} className="text-yellow-400" />
-            <span className="text-xs text-slate-400">Ticks</span>
+            <Zap size={14} className="text-app-theme-orange" />
+            <span className="text-xs text-app-neutral-600">Ticks</span>
           </div>
-          <div className="text-lg font-bold text-white">{tickData.length}</div>
-          <div className="text-xs text-slate-400">Total captured</div>
+          <div className="text-lg font-bold text-app-neutral-900">{tickData.length}</div>
+          <div className="text-xs text-app-neutral-600">Total captured</div>
         </div>
       </div>
 
       {/* Tick Chart */}
       <div className="mb-6">
-        <h4 className="text-lg font-semibold text-white mb-3">Tick Chart (Last 50)</h4>
+        <h4 className="text-lg font-semibold text-app-neutral-900 mb-3">Tick Chart (Last 50)</h4>
         <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={tickData.slice(-50)}>
               <XAxis 
                 dataKey="time" 
-                stroke="#64748b"
+                stroke="#171717"
                 fontSize={12}
                 tickFormatter={(value) => value.split(':').slice(1).join(':')}
               />
               <YAxis 
-                stroke="#64748b"
+                stroke="#171717"
                 fontSize={12}
                 domain={['dataMin - 1', 'dataMax + 1']}
                 tickFormatter={(value) => `$${value.toFixed(0)}`}
@@ -192,7 +193,7 @@ export const HighFrequencyData: React.FC<HighFrequencyDataProps> = ({ currentPri
               <Line
                 type="monotone"
                 dataKey="price"
-                stroke="#10b981"
+                stroke="#F3C623"
                 strokeWidth={1}
                 dot={false}
               />
@@ -203,11 +204,11 @@ export const HighFrequencyData: React.FC<HighFrequencyDataProps> = ({ currentPri
 
       {/* Order Book Simulation */}
       <div>
-        <h4 className="text-lg font-semibold text-white mb-3">Order Book (Latest)</h4>
+        <h4 className="text-lg font-semibold text-app-neutral-900 mb-3">Order Book (Latest)</h4>
         {tickData.length > 0 && (
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <div className="text-sm text-green-400 font-medium mb-2">Bids</div>
+              <div className="text-sm text-success-DEFAULT font-medium mb-2">Bids</div>
               <div className="space-y-1">
                 {Array.from({ length: 5 }, (_, i) => {
                   const lastTick = tickData[tickData.length - 1];
@@ -215,15 +216,15 @@ export const HighFrequencyData: React.FC<HighFrequencyDataProps> = ({ currentPri
                   const size = Math.floor(Math.random() * 500) + 100;
                   return (
                     <div key={i} className="flex justify-between text-sm">
-                      <span className="text-green-400">${price.toFixed(2)}</span>
-                      <span className="text-slate-400">{size}</span>
+                      <span className="text-success-DEFAULT">${price.toFixed(2)}</span>
+                      <span className="text-app-neutral-600">{size}</span>
                     </div>
                   );
                 })}
               </div>
             </div>
             <div>
-              <div className="text-sm text-red-400 font-medium mb-2">Asks</div>
+              <div className="text-sm text-destructive-DEFAULT font-medium mb-2">Asks</div>
               <div className="space-y-1">
                 {Array.from({ length: 5 }, (_, i) => {
                   const lastTick = tickData[tickData.length - 1];
@@ -231,8 +232,8 @@ export const HighFrequencyData: React.FC<HighFrequencyDataProps> = ({ currentPri
                   const size = Math.floor(Math.random() * 500) + 100;
                   return (
                     <div key={i} className="flex justify-between text-sm">
-                      <span className="text-red-400">${price.toFixed(2)}</span>
-                      <span className="text-slate-400">{size}</span>
+                      <span className="text-destructive-DEFAULT">${price.toFixed(2)}</span>
+                      <span className="text-app-neutral-600">{size}</span>
                     </div>
                   );
                 })}

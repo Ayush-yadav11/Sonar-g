@@ -54,26 +54,28 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
   const dataToDisplay = historicalData.length > 0 ? historicalData : mockHistoricalData;
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-yellow-500/20 p-6 overflow-x-auto max-w-full">
+    <div className="bg-app-theme-cream rounded-xl border border-app-theme-yellow/20 p-6 overflow-x-auto max-w-full">
       <div className="flex items-center justify-between mb-6 w-full">
         <div className="flex items-center space-x-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
-            <Database size={20} className="text-white" />
+          <div className="w-10 h-10 bg-app-theme-yellow/20 rounded-xl flex items-center justify-center">
+            <div className="w-6 h-6 bg-gradient-theme-warm rounded-lg flex items-center justify-center">
+              <Database size={14} className="text-white" />
+            </div>
           </div>
           <div>
-            <h3 className="text-xl font-bold text-white">Historical Data</h3>
-            <p className="text-slate-400 text-sm">Price ranges & volume</p>
+            <h3 className="text-xl font-bold text-app-neutral-900">Historical Data</h3>
+            <p className="text-app-neutral-600 text-sm">Price ranges & volume</p>
           </div>
         </div>
         
         <div className="flex items-center space-x-3">
           <div className="flex items-center space-x-2">
             {isOnline ? (
-              <Wifi size={16} className="text-green-400" />
+              <Wifi size={16} className="text-success-DEFAULT" />
             ) : (
-              <WifiOff size={16} className="text-red-400" />
+              <WifiOff size={16} className="text-destructive-DEFAULT" />
             )}
-            <span className="text-xs text-slate-400">
+            <span className="text-xs text-app-neutral-600">
               {isOnline ? 'Live Data' : 'Mock Data'}
             </span>
           </div>
@@ -81,7 +83,7 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
           <button
             onClick={fetchHistoricalData}
             disabled={isLoading}
-            className="flex items-center space-x-1 px-3 py-1 bg-blue-500/20 text-blue-400 rounded-lg hover:bg-blue-500/30 transition-colors disabled:opacity-50"
+            className="flex items-center space-x-1 px-3 py-1 bg-app-theme-yellow/20 text-app-theme-orange hover:bg-app-theme-yellow/30 transition-colors disabled:opacity-50"
           >
             <RefreshCw size={14} className={isLoading ? 'animate-spin' : ''} />
             <span className="text-sm">Refresh</span>
@@ -91,34 +93,34 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
 
       {/* Historical Ranges */}
       <div className="space-y-4 mb-6 w-full">
-        <h4 className="text-lg font-semibold text-yellow-400 flex items-center space-x-2">
+        <h4 className="text-lg font-semibold text-app-theme-orange flex items-center space-x-2">
           <Calendar size={16} />
           <span>Price Ranges</span>
         </h4>
         
         {dataToDisplay.map((data, index) => (
-          <div key={data.period} className={`p-3 rounded-lg bg-slate-700/30 ${isLoading ? 'animate-pulse' : ''}`}>
+          <div key={data.period} className={`p-3 rounded-lg bg-white border border-app-theme-yellow/20 ${isLoading ? 'animate-pulse' : ''}`}>
             <div className="flex items-center justify-between mb-2">
-              <span className="text-white font-medium">{data.period}</span>
-              <span className="text-slate-400 text-sm">{data.volume}</span>
+              <span className="text-app-neutral-900 font-medium">{data.period}</span>
+              <span className="text-app-neutral-600 text-sm">{data.volume}</span>
             </div>
             
             <div className="grid grid-cols-4 gap-3 text-sm">
               <div>
-                <div className="text-slate-400">Open</div>
-                <div className="text-blue-400 font-semibold">${data.open}</div>
+                <div className="text-app-neutral-600">Open</div>
+                <div className="text-app-theme-orange font-semibold">${data.open}</div>
               </div>
               <div>
-                <div className="text-slate-400">High</div>
-                <div className="text-green-400 font-semibold">${data.high}</div>
+                <div className="text-app-neutral-600">High</div>
+                <div className="text-success-DEFAULT font-semibold">${data.high}</div>
               </div>
               <div>
-                <div className="text-slate-400">Low</div>
-                <div className="text-red-400 font-semibold">${data.low}</div>
+                <div className="text-app-neutral-600">Low</div>
+                <div className="text-destructive-DEFAULT font-semibold">${data.low}</div>
               </div>
               <div>
-                <div className="text-slate-400">Close</div>
-                <div className="text-white font-semibold">${data.close}</div>
+                <div className="text-app-neutral-600">Close</div>
+                <div className="text-app-neutral-900 font-semibold">${data.close}</div>
               </div>
             </div>
           </div>
@@ -128,12 +130,12 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
       {/* Recent Price Updates */}
       {recentPrices.length > 0 && (
         <div className="mb-4 w-full">
-          <h4 className="text-lg font-semibold text-yellow-400 mb-3">Recent Updates</h4>
+          <h4 className="text-lg font-semibold text-app-theme-orange mb-3">Recent Updates</h4>
           <div className="space-y-2">
             {recentPrices.map((price, index) => (
               <div key={price.timestamp} className="flex items-center justify-between text-sm">
-                <span className="text-slate-400">{price.time}</span>
-                <span className="text-white font-mono">${price.price.toFixed(2)}</span>
+                <span className="text-app-neutral-600">{price.time}</span>
+                <span className="text-app-neutral-900 font-mono">${price.price.toFixed(2)}</span>
               </div>
             ))}
           </div>
@@ -141,9 +143,9 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
       )}
 
       {/* Status Footer */}
-      <div className="flex items-center justify-between text-xs text-slate-500 border-t border-slate-700/50 pt-3 w-full">
+      <div className="flex items-center justify-between text-xs text-app-neutral-600 border-t border-app-theme-yellow/20 pt-3 w-full">
         <div className="flex items-center space-x-2">
-          <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-400' : 'bg-yellow-400'}`} />
+          <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-success-DEFAULT' : 'bg-app-theme-yellow'}`} />
           <span>
             {isOnline ? 'Realistic price simulation (Alpha Vantage ready)' : 'Using cached data'}
           </span>

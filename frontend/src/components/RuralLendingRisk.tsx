@@ -116,38 +116,39 @@ const RuralLendingRisk: React.FC = () => {
   return (
     <div className="space-y-6 p-6">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+        <h1 className="text-3xl font-bold text-app-neutral-900 mb-2">
           Rural Gold Loan Risk Assessment
         </h1>
-        <p className="text-slate-600 dark:text-slate-400">
+        <p className="text-app-neutral-600">
           Calculate loan risk based on gold collateral and market predictions
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Input Section */}
-        <Card>
+        <Card className="bg-app-theme-cream border-app-theme-yellow/20">
           <CardHeader>
-            <CardTitle>Loan Details</CardTitle>
-            <CardDescription>Enter the gold and loan specifications</CardDescription>
+            <CardTitle className="text-app-neutral-900">Loan Details</CardTitle>
+            <CardDescription className="text-app-neutral-600">Enter the gold and loan specifications</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="goldWeight">Gold Weight (grams)</Label>
+              <Label className="text-app-neutral-700">Gold Weight (grams)</Label>
               <Input
                 id="goldWeight"
                 type="number"
                 value={goldWeight}
                 onChange={(e) => setGoldWeight(Number(e.target.value))}
                 min={1}
+                className="border-app-theme-yellow/20 focus:border-app-theme-yellow"
               />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="goldPurity">Gold Purity (Karats)</Label>
+              <Label className="text-app-neutral-700">Gold Purity (Karats)</Label>
               <select
                 id="goldPurity"
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded border-app-theme-yellow/20 focus:border-app-theme-yellow bg-white text-app-neutral-900"
                 value={goldPurity}
                 onChange={(e) => setGoldPurity(Number(e.target.value))}
               >
@@ -158,7 +159,7 @@ const RuralLendingRisk: React.FC = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="loanAmount">Loan Amount (INR)</Label>
+              <Label className="text-app-neutral-700">Loan Amount (INR)</Label>
               <Input
                 id="loanAmount"
                 type="number"
@@ -166,11 +167,12 @@ const RuralLendingRisk: React.FC = () => {
                 onChange={(e) => setLoanAmount(Number(e.target.value))}
                 min={1000}
                 step={1000}
+                className="border-app-theme-yellow/20 focus:border-app-theme-yellow"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="loanDuration">Loan Duration (months)</Label>
+              <Label className="text-app-neutral-700">Loan Duration (months)</Label>
               <Slider
                 id="loanDuration"
                 value={[loanDuration]}
@@ -178,61 +180,62 @@ const RuralLendingRisk: React.FC = () => {
                 min={1}
                 max={12}
                 step={1}
+                className="bg-app-theme-yellow/20"
               />
-              <div className="text-sm text-slate-500">{loanDuration} months</div>
+              <div className="text-sm text-app-neutral-600">{loanDuration} months</div>
             </div>
           </CardContent>
         </Card>
 
         {/* Risk Assessment Section */}
-        <Card>
+        <Card className="bg-app-theme-cream border-app-theme-yellow/20">
           <CardHeader>
-            <CardTitle>Risk Assessment</CardTitle>
-            <CardDescription>Current market value and risk metrics</CardDescription>
+            <CardTitle className="text-app-neutral-900">Risk Assessment</CardTitle>
+            <CardDescription className="text-app-neutral-600">Current market value and risk metrics</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             {riskMetrics && (
               <>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label>Current Gold Rate</Label>
-                    <div className="text-2xl font-bold">
+                    <Label className="text-app-neutral-700">Current Gold Rate</Label>
+                    <div className="text-2xl font-bold text-app-theme-orange-dark">
                       {formatINR(currentGoldPrice)}/g
                     </div>
                   </div>
                   <div>
-                    <Label>Total Gold Value</Label>
-                    <div className="text-2xl font-bold">
+                    <Label className="text-app-neutral-700">Total Gold Value</Label>
+                    <div className="text-2xl font-bold text-app-theme-orange-dark">
                       {formatINR(goldWeight * currentGoldPrice * (GOLD_PURITY_RATIO[goldPurity as keyof typeof GOLD_PURITY_RATIO] || 0.916))}
                     </div>
                   </div>
                 </div>
 
                 <Alert className={`
-                  ${riskMetrics.riskLevel === 'Low' ? 'bg-green-50 border-green-200' :
-                    riskMetrics.riskLevel === 'Medium' ? 'bg-yellow-50 border-yellow-200' :
-                    'bg-red-50 border-red-200'}
+                  ${riskMetrics.riskLevel === 'Low' ? 'bg-success-DEFAULT/10 border-success-DEFAULT/30' :
+                    riskMetrics.riskLevel === 'Medium' ? 'bg-app-theme-yellow/10 border-app-theme-yellow/30' :
+                    'bg-destructive-DEFAULT/10 border-destructive-DEFAULT/30'}
                 `}>
                   <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Risk Level: {riskMetrics.riskLevel}</AlertTitle>
-                  <AlertDescription>
+                  <AlertTitle className="text-app-neutral-900">Risk Level: {riskMetrics.riskLevel}</AlertTitle>
+                  <AlertDescription className="text-app-neutral-700">
                     Current LTV: {riskMetrics.loanToValue.toFixed(1)}%<br />
                     Predicted Worst-Case LTV: {riskMetrics.worstCaseLTV.toFixed(1)}%
                   </AlertDescription>
                 </Alert>
 
                 <div>
-                  <Label>Recommended Maximum Loan</Label>
-                  <div className="text-2xl font-bold text-green-600">
+                  <Label className="text-app-neutral-700">Recommended Maximum Loan</Label>
+                  <div className="text-2xl font-bold text-success-DEFAULT">
                     {formatINR(riskMetrics.maxLoanAmount)}
                   </div>
                 </div>
 
                 {riskMetrics.loanToValue > 65 && (
-                  <Alert variant="destructive">
+                  <Alert variant="destructive" className="bg-destructive-DEFAULT/10 border-destructive-DEFAULT/30">
                     <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>High LTV Warning</AlertTitle>
-                    <AlertDescription>
+                    <AlertTitle className="text-destructive-DEFAULT">High LTV Warning</AlertTitle>
+                    <AlertDescription className="text-app-neutral-700">
                       The requested loan amount exceeds the recommended 65% LTV ratio.
                       Consider reducing the loan amount to {formatINR(riskMetrics.maxLoanAmount)}.
                     </AlertDescription>
@@ -243,16 +246,16 @@ const RuralLendingRisk: React.FC = () => {
 
             {loading && (
               <div className="text-center py-4">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
-                <p className="mt-2 text-sm text-gray-600">Loading data...</p>
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-app-theme-orange"></div>
+                <p className="mt-2 text-sm text-app-neutral-600">Loading data...</p>
               </div>
             )}
 
             {error && (
-              <Alert variant="destructive">
+              <Alert variant="destructive" className="bg-destructive-DEFAULT/10 border-destructive-DEFAULT/30">
                 <AlertCircle className="h-4 w-4" />
-                <AlertTitle>Error</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
+                <AlertTitle className="text-destructive-DEFAULT">Error</AlertTitle>
+                <AlertDescription className="text-app-neutral-700">{error}</AlertDescription>
               </Alert>
             )}
           </CardContent>
@@ -261,10 +264,10 @@ const RuralLendingRisk: React.FC = () => {
 
       {/* Price Prediction Chart */}
       {predictedPrices.length > 0 && (
-        <Card className="mt-6">
+        <Card className="mt-6 bg-app-theme-cream border-app-theme-yellow/20">
           <CardHeader>
-            <CardTitle>30-Day Price Prediction</CardTitle>
-            <CardDescription>Forecasted gold prices for risk assessment</CardDescription>
+            <CardTitle className="text-app-neutral-900">30-Day Price Prediction</CardTitle>
+            <CardDescription className="text-app-neutral-600">Forecasted gold prices for risk assessment</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
@@ -276,15 +279,15 @@ const RuralLendingRisk: React.FC = () => {
                   }))}
                   margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
                 >
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="day" />
-                  <YAxis />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
+                  <XAxis dataKey="day" stroke="#171717" />
+                  <YAxis stroke="#171717" />
                   <Tooltip />
                   <Legend />
                   <Line
                     type="monotone"
                     dataKey="price"
-                    stroke="#FFB800"
+                    stroke="#F3C623"
                     name="Gold Price (INR/g)"
                   />
                 </LineChart>

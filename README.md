@@ -2,6 +2,13 @@
 
 A sophisticated gold price prediction platform with real-time market tracking and advanced machine learning algorithms, featuring an elegant dark-themed UI with golden accents, designed for professional gold market analysis and forecasting.
 
+🌐 **[Live Demo](https://midas-trend.vercel.app)** | [Documentation](#-overview)
+
+## 🌐 Deployment Links
+
+- **Frontend**: [https://midas-trend.vercel.app](https://midas-trend.vercel.app)
+- **Backend API**: [https://sonar-g.onrender.com](https://sonar-g.onrender.com)
+
 ## 📊 Overview
 
 MidasTrend combines LSTM neural networks with modern web technologies to deliver accurate gold price predictions. The platform features a React frontend with Tailwind CSS, custom animated backgrounds, and a Flask backend API that serves predictions from a trained machine learning model.
@@ -12,10 +19,27 @@ MidasTrend combines LSTM neural networks with modern web technologies to deliver
 - **📊 Real-time Market Tracking** - Live price updates with API integration capabilities
 - **🔮 Multi-timeframe Forecasting** - Next day, week, and custom (1-30 day) predictions
 - **📈 Trend Analysis** - Pattern recognition with historical data comparison
-- **🎨 Modern UI** - Elegant dark theme with golden accents and animated backgrounds
+- **🎨 Modern UI** - Elegant theme system with light/dark modes and golden accents
+- **🌙 Smart Theme System** - Automatic system theme detection with manual override options
 - **🖥️ Interactive Dashboard** - Streamlined interface for data visualization and predictions
 - **🔍 Scenario Analysis** - "What-if" simulation for market conditions
 - **⚡ API Integration** - RESTful endpoints for prediction services
+
+## 🎨 Theme System
+
+MidasTrend features a sophisticated theme system:
+
+- **Automatic Theme Detection** - Automatically matches your system preferences
+- **Manual Theme Control** - Easy switching between light and dark modes
+- **Golden Accents** - Carefully crafted gold-themed color palette
+- **High Contrast** - Optimized for readability in both light and dark modes
+- **Smooth Transitions** - Elegant animations when switching themes
+- **Persistent Preference** - Your theme choice is remembered across sessions
+
+To change the theme:
+1. Click the theme toggle button (sun/moon icon) in the navigation bar
+2. Choose between Light, Dark, or System preference
+3. Experience smooth transition animations between themes
 
 ## 🚀 Getting Started
 
@@ -142,14 +166,123 @@ The gold price prediction is powered by a Long Short-Term Memory (LSTM) neural n
 
 ## ⚙️ Configuration
 
-The project can be configured through:
-
 ### Environment Variables
 
-Create a `.env` file in the frontend directory:
-
+#### Frontend (.env)
 ```plaintext
-VITE_API_BASE_URL=http://localhost:5000
+# API Configuration (required)
+VITE_API_URL=https://sonar-g.onrender.com  # Production API URL
+# Use http://localhost:5000 for local development
+```
+
+#### Backend (config.py)
+```plaintext
+# Available via environment variables:
+SECRET_KEY=your-secret-key  # Optional, defaults to 'gold-prediction-secret-key'
+PORT=5000  # Optional, defaults to 5000
+```
+
+### CORS Configuration
+
+The backend API is configured to accept requests from the following origins:
+- http://localhost:8080
+- http://localhost:8081
+- http://localhost:5173
+- http://127.0.0.1:3000
+- http://127.0.0.1:5173
+- http://localhost:5000
+- https://sonar-g.vercel.app
+- https://sonar-g-git-main-ayush-yadav11.vercel.app
+- https://*.vercel.app
+
+## 🚀 Deployment
+
+### Frontend (Vercel)
+
+The frontend is deployed on Vercel with the following configuration:
+```bash
+# Build command
+npm run build
+
+# Output directory
+dist/
+
+# Environment variables required:
+VITE_API_URL=https://sonar-g.onrender.com
+```
+
+### Backend (Render)
+
+The backend is deployed on Render using Docker with the following configuration:
+
+```yaml
+services:
+  - type: web
+    name: sonar-g-backend
+    env: docker
+    region: singapore
+    plan: free
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.13
+    buildCommand: docker build -t sonar-g-backend .
+    startCommand: docker run -p $PORT:5000 sonar-g-backend
+```
+
+### Docker Support
+
+The project includes Docker support for the backend:
+
+```dockerfile
+# Use Python 3.10.13 slim image
+FROM python:3.10.13-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy application
+COPY . .
+
+# Expose port
+EXPOSE 5000
+
+# Run the application
+CMD ["python", "backend/app.py"]
+```
+
+## 📦 Dependencies
+
+### Backend
+```plaintext
+flask==3.1.0
+flask-cors==5.0.1
+tensorflow==2.15.0
+scikit-learn==1.6.1
+numpy==1.26.4
+pandas==2.1.4
+joblib==1.4.2
+```
+
+### Frontend
+```plaintext
+react: ^18.3.1
+vite: ^5.4.1
+typescript: ^5.5.3
+tailwindcss: ^3.4.11
+next-themes: ^0.3.0
+shadcn/ui components
+recharts: ^2.15.4
+react-query: ^5.56.2
 ```
 
 ## 📊 Data Sources
@@ -157,22 +290,6 @@ VITE_API_BASE_URL=http://localhost:5000
 - **Training**: Historical gold price datasets
 - **Runtime**: Supports integration with market data APIs (Alpha Vantage, etc.)
 - **Fallback**: Simulated data for development and demos
-
-## 🚀 Deployment
-
-```bash
-# Build the frontend for production
-cd frontend
-npm run build
-
-# The built files will be in the frontend/dist/ directory
-# Deploy these to your web server
-
-# For the backend, deploy the Flask app using your preferred method:
-# - Gunicorn/uWSGI for production
-# - Docker containerization
-# - Cloud platforms (Azure, AWS, GCP)
-```
 
 ## 📄 License
 

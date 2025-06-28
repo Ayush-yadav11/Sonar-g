@@ -94,7 +94,7 @@
   }
 
   body {
-    @apply bg-app-theme-cream text-foreground antialiased;
+    @apply bg-background text-foreground antialiased;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -106,11 +106,11 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-app-theme-cream;
+  @apply bg-background;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-app-theme-orange/20 rounded-full hover:bg-app-theme-orange/30 transition-colors;
+  @apply bg-muted hover:bg-muted/80 rounded-full transition-colors;
 }
 
 /* Smooth transitions */

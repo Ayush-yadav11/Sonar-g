@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: sonar-g-backend
+    env: docker
+    region: singapore  # Choose the region closest to your users
+    plan: free  # or specify your plan
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.13
+    buildCommand: docker build -t sonar-g-backend .
+    startCommand: docker run -p $PORT:5000 sonar-g-backend 

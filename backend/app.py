@@ -7,7 +7,8 @@ from datetime import datetime, timedelta
 import os
 
 app = Flask(__name__)
-# Configure CORS with more permissive settings for development
+
+# Configure CORS for production
 CORS(app, resources={
     r"/api/*": {
         "origins": [
@@ -16,7 +17,9 @@ CORS(app, resources={
             "http://localhost:5173",
             "http://127.0.0.1:3000",
             "http://127.0.0.1:5173",
-            "http://localhost:5000"
+            "http://localhost:5000",
+            # Add your Render frontend URL here
+            "https://*.onrender.com"
         ],
         "methods": ["GET", "POST", "OPTIONS"],
         "allow_headers": ["Content-Type", "Authorization"]
@@ -255,30 +258,15 @@ def root():
     })
 
 if __name__ == '__main__':
-    print("Starting Gold Price Prediction API...")
-    print("Working directory:", os.getcwd())
-    
-    # Try to load model and data, but start server regardless
-    model_loaded = load_model_and_data()
-    
-    if model_loaded:
-        print("All components loaded successfully!")
+    # Load the model when the app starts
+    if load_model_and_data():
+        print("Model and data loaded successfully")
     else:
-        print("WARNING: Model components failed to load. API will run with limited functionality.")
+        print("Failed to load model and data")
     
-    print("API endpoints:")
-    print("- GET / - Root endpoint")
-    print("- GET /api/test - Simple test")
-    print("- GET /api/health - Health check")
-    print("- GET /api/model/info - Model information")
-    print("- GET /api/predict/next - Predict next day price")
-    print("- GET /api/predict/week - Predict next 7 days")
-    print("- POST /api/predict/custom - Predict custom days (1-30)")
-    print("Starting server on http://localhost:5000")
+    # Get port from environment variable for Render deployment
+    port = int(os.environ.get('PORT', 5000))
     
-    try:
-        app.run(debug=True, host='0.0.0.0', port=5000)
-    except Exception as e:
-        print(f"Failed to start server: {e}")
-        print("Try running on a different port or check if port 5000 is already in use")
+    # Run the app
+    app.run(host='0.0.0.0', port=port)
 

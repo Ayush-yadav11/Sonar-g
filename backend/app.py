@@ -63,10 +63,11 @@ def load_model_and_data():
     print("Contents:", os.listdir('.'))
     
     try:
-        # Load the trained model
-        model_path = os.path.join('models', 'gold_price_lstm_model.h5')
+        # First try models directory
+        model_path = os.path.join('backend', 'models', 'gold_price_lstm_model.h5')
         if not os.path.exists(model_path):
-            model_path = '../gold_price_lstm_model.h5'  # Fallback to root directory
+            # Then try root directory
+            model_path = 'gold_price_lstm_model.h5'
         
         print(f"Loading model from: {model_path}")
         if not os.path.exists(model_path):
@@ -76,9 +77,9 @@ def load_model_and_data():
         print("Model loaded successfully")
         
         # Load the scaler
-        scaler_path = os.path.join('models', 'gold_price_scaler.pkl')
+        scaler_path = os.path.join('backend', 'models', 'gold_price_scaler.pkl')
         if not os.path.exists(scaler_path):
-            scaler_path = '../gold_price_scaler.pkl'  # Fallback to root directory
+            scaler_path = 'gold_price_scaler.pkl'
         
         print(f"Loading scaler from: {scaler_path}")
         if not os.path.exists(scaler_path):
@@ -88,9 +89,9 @@ def load_model_and_data():
         print("Scaler loaded successfully")
         
         # Load the last 60 prices
-        data_path = os.path.join('data', 'last_60_prices.npy')
+        data_path = os.path.join('backend', 'data', 'last_60_prices.npy')
         if not os.path.exists(data_path):
-            data_path = '../last_60_prices.npy'  # Fallback to root directory
+            data_path = 'last_60_prices.npy'
         
         print(f"Loading data from: {data_path}")
         if not os.path.exists(data_path):

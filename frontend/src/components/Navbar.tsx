@@ -77,7 +77,59 @@ export const Navbar = ({ isLive, onToggleLive }: NavbarProps) => {
             </Button>
           </div>
           
-          
+          {/* Desktop Navigation */}
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Dashboard</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                    <ListItem
+                      href="/dashboard"
+                      title="Dashboard Overview"
+                    >
+                     
+                    </ListItem>
+                    <ListItem
+                      href="/prediction"
+                      title="ML Predictions"
+                    >
+                  
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Analysis</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
+                    <ListItem
+                      href="/historical"
+                      title="Historical Data"
+                    >
+                     
+                    </ListItem>
+                    <ListItem
+                      href="/scenarios"
+                      title="Scenario Analysis"
+                    >
+                     
+                    </ListItem>
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <Link to="/about" className={cn(
+                  "group inline-flex h-10 w-max items-center justify-center rounded-md bg-background px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-accent/50 data-[state=open]:bg-accent/50"
+                )}>
+                  About
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
           <div className="hidden md:flex items-center space-x-3">
             <ThemeToggle />
             {isLive !== undefined && onToggleLive && (

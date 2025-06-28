@@ -22,28 +22,44 @@ def load_model_and_data():
     print("Contents:", os.listdir('.'))
     
     try:
-        # Load the trained model
-        if not os.path.exists('gold_price_lstm_model.h5'):
-            print("WARNING: Model file not found")
-        else:
-            model = tf.keras.models.load_model('gold_price_lstm_model.h5')
-            print("Model loaded successfully")
+        # First try models directory
+        model_path = os.path.join('backend', 'models', 'gold_price_lstm_model.h5')
+        if not os.path.exists(model_path):
+            # Then try root directory
+            model_path = 'gold_price_lstm_model.h5'
+        
+        print(f"Loading model from: {model_path}")
+        if not os.path.exists(model_path):
+            raise FileNotFoundError(f"Model file not found at {model_path}")
+            
+        model = tf.keras.models.load_model(model_path)
+        print("Model loaded successfully")
         
         # Load the scaler
-        if not os.path.exists('gold_price_scaler.pkl'):
-            print("WARNING: Scaler file not found")
-        else:
-            scaler = joblib.load('gold_price_scaler.pkl')
-            print("Scaler loaded successfully")
+        scaler_path = os.path.join('backend', 'models', 'gold_price_scaler.pkl')
+        if not os.path.exists(scaler_path):
+            scaler_path = 'gold_price_scaler.pkl'
+        
+        print(f"Loading scaler from: {scaler_path}")
+        if not os.path.exists(scaler_path):
+            raise FileNotFoundError(f"Scaler file not found at {scaler_path}")
+            
+        scaler = joblib.load(scaler_path)
+        print("Scaler loaded successfully")
         
         # Load the last 60 prices
-        if not os.path.exists('last_60_prices.npy'):
-            print("WARNING: Data file not found")
-        else:
-            last_60_prices = np.load('last_60_prices.npy')
-            print("Last 60 prices loaded successfully")
+        data_path = os.path.join('backend', 'data', 'last_60_prices.npy')
+        if not os.path.exists(data_path):
+            data_path = 'last_60_prices.npy'
         
-        return model is not None and scaler is not None and last_60_prices is not None
+        print(f"Loading data from: {data_path}")
+        if not os.path.exists(data_path):
+            raise FileNotFoundError(f"Data file not found at {data_path}")
+            
+        last_60_prices = np.load(data_path)
+        print("Last 60 prices loaded successfully")
+        
+        return True
     except Exception as e:
         print(f"Error loading model/data: {e}")
         import traceback

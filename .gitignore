@@ -40,7 +40,6 @@ dataset/
 !**/components.json
 
 # Model files
-*.pkl
 *.model
 *.joblib
 *.npy

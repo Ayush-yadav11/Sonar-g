@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { TrendingUp, Target, Activity } from 'lucide-react';
 
@@ -44,7 +43,7 @@ export const MetricsCards: React.FC<MetricsCardsProps> = ({ currentPrice, predic
   return (
     <div className="space-y-4">
       {metrics.map((metric, index) => (
-        <div key={metric.title} className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-yellow-500/20 p-4">
+        <div key={metric.title} className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-yellow-500/20 p-4 h-[120px]">
           <div className="flex items-center justify-between mb-3">
             <div className={`w-8 h-8 bg-gradient-to-br ${metric.color} rounded-lg flex items-center justify-center`}>
               <metric.icon size={16} className="text-white" />

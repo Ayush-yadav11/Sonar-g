@@ -1,10 +1,10 @@
 # Sonar g
 
-A sophisticated gold price prediction platform with real-time market tracking and advanced machine learning algorithms, featuring a responsive UI designed for professional gold market analysis and forecasting.
+A sophisticated gold price prediction platform with real-time market tracking and advanced machine learning algorithms, featuring an elegant dark-themed UI with golden accents, designed for professional gold market analysis and forecasting.
 
 ## 📊 Overview
 
-Sonar g combines LSTM neural networks with modern web technologies to deliver accurate gold price predictions. The platform features a React frontend with Tailwind CSS and a Flask backend API that serves predictions from a trained machine learning model.
+Sonar g combines LSTM neural networks with modern web technologies to deliver accurate gold price predictions. The platform features a React frontend with Tailwind CSS, custom animated backgrounds, and a Flask backend API that serves predictions from a trained machine learning model.
 
 ## ✨ Key Features
 
@@ -12,8 +12,8 @@ Sonar g combines LSTM neural networks with modern web technologies to deliver ac
 - **📊 Real-time Market Tracking** - Live price updates with API integration capabilities
 - **🔮 Multi-timeframe Forecasting** - Next day, week, and custom (1-30 day) predictions
 - **📈 Trend Analysis** - Pattern recognition with historical data comparison
-- **🎨 Responsive UI** - Modern interface with light/dark mode support
-- **🖥️ Interactive Dashboard** - Multiple tabs for different data views and prediction tools
+- **🎨 Modern UI** - Elegant dark theme with golden accents and animated backgrounds
+- **🖥️ Interactive Dashboard** - Streamlined interface for data visualization and predictions
 - **🔍 Scenario Analysis** - "What-if" simulation for market conditions
 - **⚡ API Integration** - RESTful endpoints for prediction services
 
@@ -76,7 +76,8 @@ The backend API will be available at `http://localhost:5000` and the frontend ap
 │   ├── src/
 │   │   ├── components/     # React components
 │   │   ├── services/       # API service layer
-│   │   └── ...
+│   │   ├── pages/          # Page components
+│   │   └── hooks/          # Custom React hooks
 │   ├── package.json        # Node.js dependencies
 │   └── .env                # Environment variables
 ├── dataset/                # Training datasets (git ignored)
@@ -101,11 +102,12 @@ The Flask backend provides several RESTful endpoints:
 
 The React frontend includes:
 
-- **Dashboard** - Overview with live prices and key metrics
-- **LSTM Prediction** - Machine learning model predictions
-- **Scenarios** - Market scenario analysis
+- **Modern Landing Page** - Hero section with animated golden background
+- **Live Price Dashboard** - Real-time price tracking with key metrics
+- **LSTM Prediction Panel** - Machine learning model predictions
+- **Historical Data Analysis** - Comprehensive historical data visualization
+- **Scenario Analysis** - Market scenario simulation tools
 - **What-If Simulator** - Interactive prediction simulation
-- **High-Frequency Data** - Detailed market data visualizations
 
 ## 🧠 Machine Learning Model
 
@@ -136,8 +138,9 @@ The gold price prediction is powered by a Long Short-Term Memory (LSTM) neural n
 - shadcn/ui components
 - Recharts for data visualization
 - React Query for API integration
+- Custom SVG animations
 
-## � Configuration
+## ⚙️ Configuration
 
 The project can be configured through:
 
@@ -171,7 +174,7 @@ npm run build
 # - Cloud platforms (Azure, AWS, GCP)
 ```
 
-## � License
+## 📄 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 

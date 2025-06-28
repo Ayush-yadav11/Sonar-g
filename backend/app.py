@@ -18,11 +18,12 @@ CORS(app, resources={
             "http://127.0.0.1:3000",
             "http://127.0.0.1:5173",
             "http://localhost:5000",
-            # Add your Render frontend URL here
-            "https://*.onrender.com"
+            "https://sonar-g.vercel.app",  # Vercel production URL
+            "https://*.vercel.app"  # All Vercel preview deployments
         ],
         "methods": ["GET", "POST", "OPTIONS"],
-        "allow_headers": ["Content-Type", "Authorization"]
+        "allow_headers": ["Content-Type", "Authorization"],
+        "supports_credentials": True
     }
 })
 

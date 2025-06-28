@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://sonar-g.onrender.com';
+const API_BASE_URL = (import.meta.env.VITE_API_URL || 'https://sonar-g.onrender.com').replace(/\/+$/, '');
 
 // Debug: Log the API base URL
 console.log('🔧 API Base URL configured as:', API_BASE_URL);
@@ -64,9 +64,31 @@ export class GoldPredictionAPI {
     this.baseURL = API_BASE_URL;
   }
 
+  private async fetchWithCORS(url: string, options: RequestInit = {}): Promise<Response> {
+    const defaultOptions: RequestInit = {
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    try {
+      const response = await fetch(url, defaultOptions);
+      if (response.status === 0) {
+        throw new Error('CORS error: The server is not allowing cross-origin requests');
+      }
+      return response;
+    } catch (error) {
+      console.error('Network or CORS error:', error);
+      throw error;
+    }
+  }
+
   async getNextDayPrediction(): Promise<PredictionResponse> {
     try {
-      const response = await fetch(`${this.baseURL}/api/predict/next`);
+      const response = await this.fetchWithCORS(`${this.baseURL}/api/predict/next`);
       const data = await response.json();
       
       if (!response.ok) {
@@ -82,7 +104,7 @@ export class GoldPredictionAPI {
 
   async getWeekPredictions(): Promise<PredictionResponse> {
     try {
-      const response = await fetch(`${this.baseURL}/api/predict/week`);
+      const response = await this.fetchWithCORS(`${this.baseURL}/api/predict/week`);
       const data = await response.json();
       
       if (!response.ok) {
@@ -98,11 +120,8 @@ export class GoldPredictionAPI {
 
   async getCustomPredictions(days: number): Promise<PredictionResponse> {
     try {
-      const response = await fetch(`${this.baseURL}/api/predict/custom`, {
+      const response = await this.fetchWithCORS(`${this.baseURL}/api/predict/custom`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
         body: JSON.stringify({ days }),
       });
       
@@ -139,9 +158,8 @@ export class GoldPredictionAPI {
     try {
       const healthUrl = `${this.baseURL}/api/health`;
       console.log(`🔧 Making health check request to: ${healthUrl}`);
-      console.log(`🔧 Base URL: ${this.baseURL}`);
-      const response = await fetch(healthUrl);
       
+      const response = await this.fetchWithCORS(healthUrl);
       console.log(`Health check response status: ${response.status}`);
       
       if (!response.ok) {

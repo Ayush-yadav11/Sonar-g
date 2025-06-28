@@ -39,16 +39,7 @@ dataset/
 !.vscode/tasks.json
 !**/components.json
 
-# Model files
-*.model
-*.joblib
-*.npy
-*.npz
-*.onnx
-*.pt
-*.pth
-*.weights
-trained_models/
+
 
 # Python
 __pycache__/

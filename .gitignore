@@ -40,7 +40,6 @@ dataset/
 !**/components.json
 
 # Model files
-*.h5
 *.pkl
 *.model
 *.joblib

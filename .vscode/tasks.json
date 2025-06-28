@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Gold Price Backend API",
+			"type": "shell",
+			"command": "cd /d c:\\Users\\hi\\Desktop\\HeaLink\\Sonar-g\\backend && python app.py",
+			"group": "none",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Gold Price Frontend",
+			"type": "shell",
+			"command": "cd /d c:\\Users\\hi\\Desktop\\HeaLink\\Sonar-g\\frontend && npm install && npm run dev",
+			"group": "none",
+			"isBackground": true,
+			"problemMatcher": []
+		}
+	]
+}

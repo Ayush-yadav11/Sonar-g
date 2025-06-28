@@ -15,6 +15,7 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/tasks.json
 .idea
 .DS_Store
 *.suo
@@ -23,3 +24,42 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Data files
+dataset/
+*.csv
+*.xlsx
+*.xls
+*.parquet
+*.feather
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!.vscode/tasks.json
+!**/components.json
+
+# Model files
+*.h5
+*.pkl
+*.model
+*.joblib
+*.npy
+*.npz
+*.onnx
+*.pt
+*.pth
+*.weights
+trained_models/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.env
+.venv

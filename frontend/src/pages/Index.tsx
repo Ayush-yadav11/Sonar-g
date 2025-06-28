@@ -10,6 +10,7 @@ import { WhatIfSimulator } from '@/components/WhatIfSimulator';
 import { HighFrequencyData } from '@/components/HighFrequencyData';
 import { SplineBackground } from '@/components/Background';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import GoldPricePrediction from '@/components/GoldPricePrediction';
 
 const Index = () => {
   const [currentPrice, setCurrentPrice] = useState(2085.50);
@@ -76,6 +77,7 @@ const Index = () => {
 
   const tabs = [
     { id: 'dashboard', label: 'Dashboard' },
+    { id: 'lstm-prediction', label: 'LSTM Prediction' },
     { id: 'scenarios', label: 'Scenarios' },
     { id: 'simulator', label: 'What-If' },
     { id: 'hfd', label: 'High-Freq Data' }
@@ -95,7 +97,7 @@ const Index = () => {
                 <span className="text-app-background font-bold text-lg">Au</span>
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-app-text-primary">Gold Price Predictor</h1>
+                <h1 className="text-2xl font-bold text-app-text-primary">Sonar g</h1>
                 <p className="text-app-accent-gold text-sm">Real-time analysis & ML predictions</p>
               </div>
             </div>
@@ -155,6 +157,10 @@ const Index = () => {
               <HistoricalData priceHistory={priceHistory} />
             </div>
           </>
+        )}
+
+        {activeTab === 'lstm-prediction' && (
+          <GoldPricePrediction />
         )}
 
         {activeTab === 'scenarios' && (

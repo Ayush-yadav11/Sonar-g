@@ -96,6 +96,111 @@ VITE_ALPHA_VANTAGE_API_KEY=your_api_key_here
 ### API Integration
 The app supports Alpha Vantage API for real market data, but also includes intelligent mock data for development and demonstration.
 
+# Gold Price Prediction Project
+
+This project predicts gold prices using an LSTM neural network with a React frontend and Flask backend API.
+
+## Project Structure
+
+```
+├── backend/                 # Flask API server
+│   ├── app.py              # Main API application
+│   ├── config.py           # Configuration settings
+│   ├── requirements.txt    # Python dependencies
+│   ├── start_backend.bat   # Backend startup script
+│   ├── models/             # Trained model files
+│   └── data/               # Model data files
+├── frontend/               # React frontend
+│   ├── src/
+│   │   ├── components/     # React components
+│   │   ├── services/       # API service layer
+│   │   └── ...
+│   ├── package.json        # Node.js dependencies
+│   └── .env               # Environment variables
+├── dataset/               # Training datasets
+├── Gold_Price_Prediction_LSTM.ipynb  # Model training notebook
+└── setup_project.bat     # Complete project setup
+```
+
+## Quick Start
+
+### Option 1: Complete Setup (Recommended)
+Run the complete setup script:
+```bash
+setup_project.bat
+```
+
+### Option 2: Manual Setup
+
+#### 1. Train the LSTM Model
+- Open `Gold_Price_Prediction_LSTM.ipynb` in Jupyter or VS Code
+- Run all cells to train and save the model files:
+  - `gold_price_lstm_model.h5`
+  - `gold_price_scaler.pkl`
+  - `last_60_prices.npy`
+
+#### 2. Setup Backend
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+start_backend.bat
+```
+
+#### 3. Setup Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+## Usage
+
+1. **Start Backend**: Run `backend/start_backend.bat`
+   - API available at `http://localhost:5000`
+
+2. **Start Frontend**: Run `npm run dev` in the frontend directory
+   - Web app available at `http://localhost:5173`
+
+3. **Access Predictions**: 
+   - Open the web app
+   - Navigate to "LSTM Prediction" tab
+   - Use the prediction tools
+
+## API Endpoints
+
+- `GET /api/predict/next` — Predict next day's gold price
+- `GET /api/predict/week` — Predict next 7 days
+- `POST /api/predict/custom` — Predict custom days (1-30)
+- `GET /api/model/info` — Model information
+- `GET /api/health` — Health check
+
+## Frontend Features
+
+- **Real-time Connection Status**: Monitor backend connectivity
+- **Next Day Prediction**: Single-day price forecast
+- **7-Day Forecast**: Week-ahead predictions with charts
+- **Custom Predictions**: 1-30 day forecasts with analytics
+- **Interactive Charts**: Recharts-powered visualizations
+- **Model Information**: View LSTM model details and accuracy
+
+## Requirements
+
+- **Backend**: Python 3.11+, TensorFlow, Flask
+- **Frontend**: Node.js 16+, React, TypeScript
+- **Model Training**: Jupyter Notebook support
+
+## Troubleshooting
+
+1. **Model not found**: Ensure the Jupyter notebook has been run to generate model files
+2. **Backend connection failed**: Check if the backend is running on port 5000
+3. **CORS errors**: Verify the frontend is accessing the correct API URL
+
+---
+
+**Note**: Predictions are for educational purposes and should not be used as financial advice.
+
 ## 📊 Data Sources & Prediction Model
 
 - **Primary**: Alpha Vantage API (when configured)

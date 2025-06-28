@@ -239,7 +239,7 @@ def model_info():
             "data_loaded": last_60_prices is not None,
             "last_training_date": "2023-08-17",
             "accuracy": "~96%",
-            "description": "LSTM model trained on 10 years of gold price data (2013-2023)"
+            "description": "LSTM model trained on 11 years of gold price data (2013-2024)"
         })
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -6,41 +6,32 @@
 
 @layer base {
   :root {
-    /* Light Theme - Custom Gold App Colors (Updated) */
-    --background: 0 0% 98%;           /* #FAFAFA */
-    --app-background: 0 0% 98%;       /* #FAFAFA */
-    --app-background-secondary: 0 0% 94%; /* #F0F0F0 */
-    --card: 0 0% 100%;                /* #FFFFFF */
-    --card-foreground: 220 60% 7%;    /* #070E1E */
-    --foreground: 220 60% 7%;         /* #070E1E */
-    --app-text-primary: 220 60% 7%;   /* #070E1E */
-    --app-text-secondary: 200 13% 17%;/* #272F33 */
-    --secondary-foreground: 200 13% 17%; /* #272F33 */
-    --muted-foreground: 200 13% 17%;  /* #272F33 */
-    --accent: 44 65% 56%;             /* #DDB143 */
-    --accent-foreground: 0 0% 100%;   /* #FFFFFF */
-    --app-accent-gold: 44 65% 56%;    /* #DDB143 */
-    --app-accent-hover: 42 74% 44%;   /* #C4901C */
-    --primary: 44 65% 56%;            /* #DDB143 */
-    --primary-foreground: 0 0% 100%;  /* #FFFFFF */
-    --border: 0 0% 88%;               /* #E0E0E0 */
-    --input: 0 0% 88%;                /* #E0E0E0 */
-    --ring: 44 65% 56%;               /* #DDB143 */
-    --success: 134 70% 37%;           /* #1DA035 */
-    --warning: 45 100% 50%;           /* #FFBC00 */
-    --destructive: 0 74% 48%;         /* #D32222 */
-    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
-    --link: 213 91% 46%;              /* #0A6BE0 */
-    --radius: 0.5rem;
-    /* Sidebar colors for light theme */
-    --sidebar-background: 0 0% 100%;     /* #FFFFFF */
-    --sidebar-foreground: 220 60% 7%;    /* #070E1E */
-    --sidebar-primary: 44 65% 56%;       /* #DDB143 */
-    --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF */
-    --sidebar-accent: 0 0% 94%;          /* #F0F0F0 */
-    --sidebar-accent-foreground: 220 60% 7%; /* #070E1E */
-    --sidebar-border: 0 0% 88%;          /* #E0E0E0 */
-    --sidebar-ring: 44 65% 56%;          /* #DDB143 */
+    --background: 37 82% 94%;  /* #FEF3E2 */
+    --foreground: 0 0% 10%;
+
+    --card: 37 82% 94%;  /* #FEF3E2 */
+    --card-foreground: 0 0% 10%;
+
+    --primary: 46 89% 54%;  /* #F3C623 */
+    --primary-foreground: 0 0% 10%;
+
+    --secondary: 37 82% 94%;  /* #FEF3E2 */
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 37 82% 94%;  /* #FEF3E2 */
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 28 95% 58%;  /* #FA812F */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 37 82% 90%;
+    --input: 37 82% 90%;
+    --ring: 28 95% 58%;  /* #FA812F */
+
+    --radius: 1rem;
   }
 
   .dark {
@@ -103,6 +94,27 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-app-theme-cream text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-app-theme-cream;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-app-theme-orange/20 rounded-full hover:bg-app-theme-orange/30 transition-colors;
+}
+
+/* Smooth transitions */
+.transition-all {
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }

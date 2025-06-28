@@ -4,12 +4,12 @@ import { SplineBackground } from '@/components/Background';
 
 const About = () => {
   return (
-    <div className="min-h-screen bg-app-background relative">
+    <div className="min-h-screen pt-24">
       <SplineBackground />
       
-      <div className="container mx-auto px-6 py-12 relative z-10">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold text-app-text-primary mb-8 text-center">About Sonar g</h1>
+          <h1 className="text-3xl font-bold mb-6">About MidasTrend</h1>
           
           <Card className="mb-8 border-app-accent-gold/20">
             <CardHeader>
@@ -18,7 +18,7 @@ const About = () => {
             </CardHeader>
             <CardContent className="space-y-4">
               <p>
-                Sonar g is a sophisticated gold price prediction platform that utilizes 
+                MidasTrend is a sophisticated gold price prediction platform that utilizes 
                 machine learning and statistical analysis to forecast gold price trends. 
                 Our LSTM (Long Short-Term Memory) neural network model has been trained on 
                 over a decade of historical gold price data to provide accurate predictions.
@@ -67,13 +67,13 @@ const About = () => {
             </CardHeader>
             <CardContent>
               <p className="text-sm text-app-text-secondary">
-                Sonar g is a data analysis tool for informational purposes only. While we strive for accuracy, 
+                MidasTrend is a data analysis tool for informational purposes only. While we strive for accuracy, 
                 gold price predictions involve inherent risks and uncertainties. The information provided should not
                 be considered financial advice. Always consult with a qualified financial advisor before making investment decisions.
               </p>
             </CardContent>
             <CardFooter className="text-sm text-app-text-secondary border-t border-border pt-4">
-              © {new Date().getFullYear()} Sonar g | All rights reserved
+              © {new Date().getFullYear()} MidasTrend | All rights reserved
             </CardFooter>
           </Card>
         </div>

@@ -85,24 +85,33 @@ const HomePage = () => (
     </div>
     <div className="relative z-10">
       {/* Hero */}
-      <section className="pt-20 pb-12 text-center max-w-3xl mx-auto">
-        <h1 className="text-5xl md:text-6xl font-bold text-yellow-900 mb-4 tracking-tight">Sonar g</h1>
-        <p className="text-xl md:text-2xl text-yellow-800 mb-6 font-medium">
-          A sophisticated gold price prediction platform with real-time market tracking and advanced machine learning algorithms.
-        </p>
-        <p className="text-lg text-yellow-700 mb-8">
-          Designed for professional gold market analysis and forecasting.
-        </p>
-        <Button asChild size="lg" className="bg-gradient-to-r from-yellow-500 to-orange-400 text-white shadow-lg rounded-xl px-8 py-3 text-lg font-semibold">
-          <Link to="/dashboard">Explore Dashboard</Link>
-        </Button>
+      <section className="pt-36 pb-16 text-center max-w-3xl mx-auto px-4">
+        <div className="space-y-6 animate-fade-in">
+          <h1 className="text-5xl md:text-6xl font-bold text-yellow-900 mb-4 tracking-tight">MidasTrend</h1>
+          <p className="text-xl md:text-2xl text-yellow-800 mb-6 font-medium">
+            A sophisticated gold price prediction platform with real-time market tracking and advanced machine learning algorithms.
+          </p>
+          <p className="text-lg text-yellow-700 mb-8">
+            Designed for professional gold market analysis and forecasting.
+          </p>
+          <Button 
+            asChild 
+            size="lg" 
+            className="bg-gradient-to-r from-yellow-500 to-orange-400 hover:from-yellow-600 hover:to-orange-500 text-white shadow-lg hover:shadow-xl rounded-xl px-8 py-3 text-lg font-semibold transform hover:scale-105 transition-all duration-200"
+          >
+            <Link to="/dashboard">Explore Dashboard</Link>
+          </Button>
+        </div>
       </section>
       {/* Features */}
       <section className="container mx-auto px-6 mb-16">
         <h2 className="text-3xl font-bold text-yellow-900 text-center mb-8">Key Features</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
           {features.map(f => (
-            <div key={f.title} className="bg-white/90 rounded-2xl shadow p-6 border border-yellow-100 flex flex-col items-center text-center">
+            <div 
+              key={f.title} 
+              className="bg-white/90 rounded-2xl shadow p-6 border border-yellow-100 hover:shadow-lg hover:bg-white/95 transform hover:scale-105 transition-all duration-200 flex flex-col items-center text-center"
+            >
               <div className="font-bold text-lg text-yellow-900 mb-2">{f.title}</div>
               <div className="text-yellow-700 text-sm">{f.desc}</div>
             </div>
@@ -111,7 +120,7 @@ const HomePage = () => (
       </section>
       {/* Footer */}
       <footer className="w-full py-8 bg-white/80 border-t border-yellow-100 text-center text-yellow-700 text-sm">
-        &copy; {new Date().getFullYear()} Sonar g. All rights reserved.
+        &copy; {new Date().getFullYear()} MidasTrend. All rights reserved.
       </footer>
     </div>
   </div>

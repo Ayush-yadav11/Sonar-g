@@ -1,10 +1,10 @@
-# Sonar g
+# MidasTrend
 
 A sophisticated gold price prediction platform with real-time market tracking and advanced machine learning algorithms, featuring an elegant dark-themed UI with golden accents, designed for professional gold market analysis and forecasting.
 
 ## 📊 Overview
 
-Sonar g combines LSTM neural networks with modern web technologies to deliver accurate gold price predictions. The platform features a React frontend with Tailwind CSS, custom animated backgrounds, and a Flask backend API that serves predictions from a trained machine learning model.
+MidasTrend combines LSTM neural networks with modern web technologies to deliver accurate gold price predictions. The platform features a React frontend with Tailwind CSS, custom animated backgrounds, and a Flask backend API that serves predictions from a trained machine learning model.
 
 ## ✨ Key Features
 
@@ -29,8 +29,8 @@ Sonar g combines LSTM neural networks with modern web technologies to deliver ac
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/Sonar-g.git
-cd Sonar-g
+git clone https://github.com/yourusername/MidasTrend.git
+cd MidasTrend
 
 # Quick setup (Windows)
 setup_project.bat

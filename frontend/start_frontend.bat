@@ -1,8 +1,8 @@
 @echo off
-echo Starting Gold Price Prediction Frontend...
+echo Starting MidasTrend Frontend...
 echo.
 
-cd /d "c:\Users\hi\Desktop\HeaLink\Sonar-g\frontend"
+cd /d "c:\Users\hi\Desktop\HeaLink\MidasTrend\frontend"
 
 echo Current directory: %CD%
 echo.

@@ -21,10 +21,10 @@ const ScenariosPage = () => {
   const [currentPrice, setCurrentPrice] = useState(2085.50);
   
   return (
-    <div className="min-h-screen bg-app-background relative">
+    <div className="min-h-screen pt-24">
       <SplineBackground />
       
-      <div className="container mx-auto px-6 py-8 relative z-10">
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-3xl font-bold text-app-text-primary mb-6">Scenario Analysis</h1>
           

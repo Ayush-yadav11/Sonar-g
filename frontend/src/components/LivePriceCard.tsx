@@ -1,12 +1,11 @@
-
 import React from 'react';
-import { TrendingUp, TrendingDown } from 'lucide-react';
+import { TrendingUp, TrendingDown, Clock } from 'lucide-react';
 
 interface LivePriceCardProps {
   currentPrice: number;
   priceChange: number;
   priceChangePercent: string;
-  lastUpdate: Date;
+  lastUpdate: Date | null;
 }
 
 export const LivePriceCard: React.FC<LivePriceCardProps> = ({
@@ -15,53 +14,57 @@ export const LivePriceCard: React.FC<LivePriceCardProps> = ({
   priceChangePercent,
   lastUpdate
 }) => {
-  const isPositive = priceChange >= 0;
+  const formatTime = (date: Date | null) => {
+    if (!date) return 'Updating...';
+    return date.toLocaleTimeString();
+  };
 
   return (
-    <div className="bg-gradient-to-br from-slate-800/70 to-slate-700/70 backdrop-blur-sm rounded-xl border border-yellow-500/30 p-8 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/5 to-transparent" />
+    <div className="bg-app-theme-cream rounded-2xl p-6 shadow-sm relative overflow-hidden">
+      {/* Gradient accent */}
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-theme-warm" />
       
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <h2 className="text-lg font-semibold text-yellow-400 mb-1">Live Gold Price</h2>
-            <p className="text-slate-400 text-sm">Troy Ounce (USD)</p>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 bg-app-theme-yellow/20 rounded-xl flex items-center justify-center">
+            <div className="w-6 h-6 bg-gradient-theme-warm rounded-lg flex items-center justify-center">
+              {priceChange >= 0 ? (
+                <TrendingUp size={14} className="text-white" />
+              ) : (
+                <TrendingDown size={14} className="text-white" />
+              )}
+            </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-green-400 text-sm font-medium">LIVE</span>
+          <div>
+            <h3 className="text-lg font-semibold text-app-neutral-900">Live Gold Price</h3>
+            <p className="text-sm text-app-neutral-600">Real-time market data</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Price Display */}
+      <div className="space-y-6">
+        <div>
+          <div className="text-4xl font-bold text-app-theme-orange-dark tracking-tight">
+            ${currentPrice.toFixed(2)}
+          </div>
+          <div className={`flex items-center gap-2 mt-2 ${
+            priceChange >= 0 ? 'text-success-DEFAULT' : 'text-destructive-DEFAULT'
+          }`}>
+            <span className="text-base font-medium">
+              {priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)}
+            </span>
+            <span className="text-sm font-medium opacity-80">
+              ({priceChange >= 0 ? '+' : ''}{priceChangePercent}%)
+            </span>
           </div>
         </div>
 
-        <div className="space-y-4">
-          <div className="flex items-baseline space-x-4">
-            <span className="text-5xl font-bold text-white tabular-nums">
-              ${currentPrice.toLocaleString('en-US', { minimumFractionDigits: 2 })}
-            </span>
-            <div className={`flex items-center space-x-1 px-3 py-1 rounded-full ${
-              isPositive 
-                ? 'bg-green-500/20 text-green-400' 
-                : 'bg-red-500/20 text-red-400'
-            }`}>
-              {isPositive ? <TrendingUp size={16} /> : <TrendingDown size={16} />}
-              <span className="font-semibold tabular-nums">
-                {isPositive ? '+' : ''}{priceChange.toFixed(2)}
-              </span>
-              <span className="text-sm">
-                ({isPositive ? '+' : ''}{priceChangePercent}%)
-              </span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-slate-400">
-              Last updated: {lastUpdate.toLocaleTimeString()}
-            </span>
-            <span className="text-yellow-400 font-medium">
-              24H Volume: $2.4B
-            </span>
-          </div>
+        {/* Last Updated */}
+        <div className="flex items-center gap-2 text-app-neutral-500 text-sm">
+          <Clock size={14} />
+          <span>Last updated: {formatTime(lastUpdate)}</span>
         </div>
       </div>
     </div>

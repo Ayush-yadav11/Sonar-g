@@ -1,5 +1,5 @@
 @echo off
-echo Starting Gold Price Prediction Backend API...
+echo Starting MidasTrend Backend API...
 echo.
 
 cd /d "%~dp0"

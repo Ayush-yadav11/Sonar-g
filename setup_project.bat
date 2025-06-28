@@ -1,6 +1,6 @@
 @echo off
 echo ===============================================
-echo Gold Price Prediction Project Setup
+echo MidasTrend Project Setup
 echo ===============================================
 echo.
 

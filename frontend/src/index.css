@@ -6,58 +6,41 @@
 
 @layer base {
   :root {
-    /* Light Theme - Custom Gold App Colors */
-    --background: 0 0% 98%;  /* #FAFAFA */
-    --foreground: 0 0% 7%;   /* #111111 */
-
-    --card: 0 0% 100%;       /* #FFFFFF */
-    --card-foreground: 0 0% 7%; /* #111111 */
-
-    --popover: 0 0% 100%;    /* #FFFFFF */
-    --popover-foreground: 0 0% 7%; /* #111111 */
-
-    --primary: 43 77% 52%;   /* #D4AF37 - Gold accent */
-    --primary-foreground: 0 0% 100%; /* White text on gold */
-
-    --secondary: 0 0% 94%;   /* #F0F0F0 - Background secondary */
-    --secondary-foreground: 0 0% 33%; /* #555555 - Text secondary */
-
-    --muted: 0 0% 94%;       /* #F0F0F0 */
-    --muted-foreground: 0 0% 33%; /* #555555 */
-
-    --accent: 43 77% 52%;    /* #D4AF37 - Gold accent */
-    --accent-foreground: 0 0% 100%; /* White text on gold */
-
-    --destructive: 354 70% 54%; /* #D32F2F - Error red */
-    --destructive-foreground: 0 0% 100%; /* White text */
-
-    --success: 142 71% 45%;  /* #28A745 - Success green */
-    --warning: 45 100% 50%;  /* #FFB300 - Warning amber */
-    --link: 215 100% 41%;    /* #0056D2 - Link blue */
-    
-    --border: 0 0% 88%;      /* #E0E0E0 */
-    --input: 0 0% 88%;       /* #E0E0E0 */
-    --ring: 43 77% 52%;      /* #D4AF37 - Gold accent for focus rings */
-
-    --radius: 0.5rem;
-
-    /* Custom App Colors - Light Theme */
-    --app-background: 0 0% 98%;          /* #FAFAFA */
+    /* Light Theme - Custom Gold App Colors (Updated) */
+    --background: 0 0% 98%;           /* #FAFAFA */
+    --app-background: 0 0% 98%;       /* #FAFAFA */
     --app-background-secondary: 0 0% 94%; /* #F0F0F0 */
-    --app-text-primary: 0 0% 7%;         /* #111111 */
-    --app-text-secondary: 0 0% 33%;      /* #555555 */
-    --app-accent-gold: 43 77% 52%;       /* #D4AF37 */
-    --app-accent-hover: 43 70% 45%;      /* #BFA334 */
-
+    --card: 0 0% 100%;                /* #FFFFFF */
+    --card-foreground: 220 60% 7%;    /* #070E1E */
+    --foreground: 220 60% 7%;         /* #070E1E */
+    --app-text-primary: 220 60% 7%;   /* #070E1E */
+    --app-text-secondary: 200 13% 17%;/* #272F33 */
+    --secondary-foreground: 200 13% 17%; /* #272F33 */
+    --muted-foreground: 200 13% 17%;  /* #272F33 */
+    --accent: 44 65% 56%;             /* #DDB143 */
+    --accent-foreground: 0 0% 100%;   /* #FFFFFF */
+    --app-accent-gold: 44 65% 56%;    /* #DDB143 */
+    --app-accent-hover: 42 74% 44%;   /* #C4901C */
+    --primary: 44 65% 56%;            /* #DDB143 */
+    --primary-foreground: 0 0% 100%;  /* #FFFFFF */
+    --border: 0 0% 88%;               /* #E0E0E0 */
+    --input: 0 0% 88%;                /* #E0E0E0 */
+    --ring: 44 65% 56%;               /* #DDB143 */
+    --success: 134 70% 37%;           /* #1DA035 */
+    --warning: 45 100% 50%;           /* #FFBC00 */
+    --destructive: 0 74% 48%;         /* #D32222 */
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
+    --link: 213 91% 46%;              /* #0A6BE0 */
+    --radius: 0.5rem;
     /* Sidebar colors for light theme */
     --sidebar-background: 0 0% 100%;     /* #FFFFFF */
-    --sidebar-foreground: 0 0% 7%;       /* #111111 */
-    --sidebar-primary: 43 77% 52%;       /* #D4AF37 - Gold */
-    --sidebar-primary-foreground: 0 0% 100%; /* White */
+    --sidebar-foreground: 220 60% 7%;    /* #070E1E */
+    --sidebar-primary: 44 65% 56%;       /* #DDB143 */
+    --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF */
     --sidebar-accent: 0 0% 94%;          /* #F0F0F0 */
-    --sidebar-accent-foreground: 0 0% 7%; /* #111111 */
+    --sidebar-accent-foreground: 220 60% 7%; /* #070E1E */
     --sidebar-border: 0 0% 88%;          /* #E0E0E0 */
-    --sidebar-ring: 43 77% 52%;          /* #D4AF37 - Gold */
+    --sidebar-ring: 44 65% 56%;          /* #DDB143 */
   }
 
   .dark {

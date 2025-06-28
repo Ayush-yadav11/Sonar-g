@@ -1,13 +1,27 @@
-from flask import Flask, jsonify, request
-from flask_cors import CORS
+from flask import Flask, jsonify, request  #type: ignore
+from flask_cors import CORS   #type: ignore
 import numpy as np
 import joblib
-import tensorflow as tf
+import tensorflow as tf  #type: ignore
 from datetime import datetime, timedelta
 import os
 
 app = Flask(__name__)
-CORS(app, origins=['http://localhost:3000', 'http://localhost:5173', 'http://127.0.0.1:3000', 'http://127.0.0.1:5173'])  # Enable CORS for frontend integration
+# Configure CORS with more permissive settings for development
+CORS(app, resources={
+    r"/api/*": {
+        "origins": [
+            "http://localhost:8080",
+            "http://localhost:8081",
+            "http://localhost:5173",
+            "http://127.0.0.1:3000",
+            "http://127.0.0.1:5173",
+            "http://localhost:5000"
+        ],
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
 
 # Add logging to see what requests are coming in
 @app.before_request
@@ -42,7 +56,7 @@ def load_model_and_data():
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model file not found at {model_path}")
             
-        model = tf.keras.models.load_model(model_path)
+        model = tf.keras.models.load_model(model_path) # type: ignore
         print("Model loaded successfully")
         
         # Load the scaler

@@ -4,21 +4,38 @@ import { PriceChart } from '@/components/PriceChart';
 import { PredictionPanel } from '@/components/PredictionPanel';
 import { HistoricalData } from '@/components/HistoricalData';
 import { MetricsCards } from '@/components/MetricsCards';
-import { RefreshControls } from '@/components/RefreshControls';
 import { ScenarioAnalysis } from '@/components/ScenarioAnalysis';
 import { WhatIfSimulator } from '@/components/WhatIfSimulator';
 import { HighFrequencyData } from '@/components/HighFrequencyData';
 import { SplineBackground } from '@/components/Background';
-import { ThemeToggle } from '@/components/ThemeToggle';
 import GoldPricePrediction from '@/components/GoldPricePrediction';
 
-const Index = () => {
+interface IndexProps {
+  isLive?: boolean;
+  setIsLive?: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Index = ({ isLive: externalIsLive, setIsLive: externalSetIsLive }: IndexProps) => {
   const [currentPrice, setCurrentPrice] = useState(2085.50);
   const [isLive, setIsLive] = useState(true);
   const [lastUpdate, setLastUpdate] = useState(new Date());
   const [priceHistory, setPriceHistory] = useState([]);
   const [predictions, setPredictions] = useState([]);
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  // Sync with external isLive state if provided
+  useEffect(() => {
+    if (externalIsLive !== undefined) {
+      setIsLive(externalIsLive);
+    }
+  }, [externalIsLive]);
+
+  // Update external state when local state changes
+  useEffect(() => {
+    if (externalSetIsLive) {
+      externalSetIsLive(isLive);
+    }
+  }, [isLive, externalSetIsLive]);
 
   // Simulate real-time price updates
   useEffect(() => {
@@ -87,27 +104,6 @@ const Index = () => {
     <div className="min-h-screen bg-app-background relative">
       {/* Spline 3D Background */}
       <SplineBackground />
-      
-      {/* Header */}
-      <header className="bg-card/80 backdrop-blur-sm border-b border-app-accent-gold/20 relative z-10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-app-accent-gold to-app-accent-hover rounded-lg flex items-center justify-center">
-                <span className="text-app-background font-bold text-lg">Au</span>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-app-text-primary">Sonar g</h1>
-                <p className="text-app-accent-gold text-sm">Real-time analysis & ML predictions</p>
-              </div>
-            </div>
-            <div className="flex items-center space-x-3">
-              <ThemeToggle />
-              <RefreshControls isLive={isLive} onToggleLive={() => setIsLive(!isLive)} />
-            </div>
-          </div>
-        </div>
-      </header>
 
       {/* Tab Navigation */}
       <div className="container mx-auto px-6 py-4 relative z-10">

@@ -4,9 +4,18 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Loader2, TrendingUp, Calendar, DollarSign, AlertCircle, Settings } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { Loader2, TrendingUp, Calendar, DollarSign, AlertCircle, Settings, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { goldPredictionAPI, type PredictionResponse, type ModelInfo } from '@/services/goldPredictionApi';
+
+// Custom chart theme
+const chartTheme = {
+  gold: '#FFB800',
+  goldLight: '#FFD700',
+  background: '#1a1a1a',
+  text: '#ffffff',
+  grid: '#333333',
+};
 
 const GoldPricePrediction: React.FC = () => {
   const [nextDayPrediction, setNextDayPrediction] = useState<number | null>(null);
@@ -101,41 +110,60 @@ const GoldPricePrediction: React.FC = () => {
     });
   };
 
+  const CustomTooltip = ({ active, payload, label }: any) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+      return (
+        <div className="bg-slate-800 border border-slate-700 p-3 rounded-lg shadow-lg">
+          <p className="text-slate-300">{data.formattedDate}</p>
+          <p className="text-gold-500 font-semibold">
+            {formatPrice(data.price)}
+          </p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const getChartData = (predictions: PredictionResponse | null) => {
-    return predictions?.predictions?.map((price, index) => ({
+    if (!predictions?.predictions || !predictions.dates) return [];
+    
+    const basePrice = predictions.predictions[0];
+    return predictions.predictions.map((price, index) => ({
       date: predictions.dates?.[index] || '',
       price: price,
-      formattedDate: formatDate(predictions.dates?.[index] || '')
-    })) || [];
+      formattedDate: formatDate(predictions.dates?.[index] || ''),
+      change: ((price - basePrice) / basePrice) * 100
+    }));
   };
 
   const weekChartData = getChartData(weekPredictions);
   const customChartData = getChartData(customPredictions);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6 bg-slate-900 min-h-screen">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-4xl font-bold text-white mb-2">
           Gold Price Prediction
         </h1>
-        <p className="text-gray-600">
+        <p className="text-slate-400">
           AI-powered LSTM model for gold price forecasting
         </p>
       </div>
 
       {/* Connection Status */}
-      <Card>
+      <Card className="bg-slate-800 border-slate-700">
         <CardContent className="pt-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-medium">Backend Connection:</span>
-              <Badge variant={connectionStatus === 'connected' ? 'default' : 'destructive'}>
+              <span className="text-sm font-medium text-slate-300">Backend Connection:</span>
+              <Badge variant={connectionStatus === 'connected' ? 'default' : 'destructive'} className="bg-slate-700">
                 {connectionStatus === 'checking' && <Loader2 className="h-3 w-3 animate-spin mr-1" />}
                 {connectionStatus === 'connected' && '✓ Connected'}
                 {connectionStatus === 'disconnected' && '✗ Disconnected'}
               </Badge>
             </div>
-            <Button variant="outline" size="sm" onClick={checkConnection}>
+            <Button variant="outline" size="sm" onClick={checkConnection} className="border-slate-600 text-slate-300">
               <Settings className="h-4 w-4 mr-1" />
               Test Connection
             </Button>
@@ -145,44 +173,44 @@ const GoldPricePrediction: React.FC = () => {
 
       {/* Model Status */}
       {modelInfo && (
-        <Card>
+        <Card className="bg-slate-800 border-slate-700">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
+            <CardTitle className="flex items-center gap-2 text-white">
+              <TrendingUp className="h-5 w-5 text-gold-500" />
               Model Information
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div>
-                <p className="text-sm text-gray-600">Model Type</p>
-                <Badge variant="secondary">{modelInfo.model_type}</Badge>
+                <p className="text-sm text-slate-400">Model Type</p>
+                <Badge variant="secondary" className="bg-slate-700 text-gold-500">{modelInfo.model_type}</Badge>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Accuracy</p>
-                <Badge variant="default">{modelInfo.accuracy}</Badge>
+                <p className="text-sm text-slate-400">Accuracy</p>
+                <Badge variant="default" className="bg-green-900/50 text-green-400">{modelInfo.accuracy}</Badge>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Window Size</p>
-                <span className="font-semibold">{modelInfo.window_size} days</span>
+                <p className="text-sm text-slate-400">Window Size</p>
+                <span className="font-semibold text-white">{modelInfo.window_size} days</span>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Status</p>
-                <Badge variant={modelInfo.model_loaded ? "default" : "destructive"}>
+                <p className="text-sm text-slate-400">Status</p>
+                <Badge variant={modelInfo.model_loaded ? "default" : "destructive"} className={modelInfo.model_loaded ? "bg-green-900/50 text-green-400" : "bg-red-900/50 text-red-400"}>
                   {modelInfo.model_loaded ? "Ready" : "Not Loaded"}
                 </Badge>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mt-4">{modelInfo.description}</p>
+            <p className="text-sm text-slate-400 mt-4">{modelInfo.description}</p>
           </CardContent>
         </Card>
       )}
 
       {/* Error Display */}
       {error && (
-        <Card className="border-red-200 bg-red-50">
+        <Card className="border-red-900 bg-red-900/20">
           <CardContent className="pt-6">
-            <div className="flex items-center gap-2 text-red-800">
+            <div className="flex items-center gap-2 text-red-400">
               <AlertCircle className="h-4 w-4" />
               <p>{error}</p>
             </div>
@@ -190,259 +218,165 @@ const GoldPricePrediction: React.FC = () => {
         </Card>
       )}
 
-      {/* Next Day Prediction */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Next Day Prediction
-          </CardTitle>
-          <CardDescription>
-            Predict tomorrow's gold price using LSTM model
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <Button 
-              onClick={fetchNextDayPrediction}
-              disabled={loading.nextDay || connectionStatus !== 'connected'}
-              className="w-full md:w-auto"
-            >
+      {/* Predictions Display */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Next Day Prediction */}
+        <Card className="bg-slate-800 border-slate-700">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Calendar className="h-5 w-5 text-gold-500" />
+              Next Day Prediction
+            </CardTitle>
+            <CardDescription className="text-slate-400">
+              Predicted gold price for tomorrow
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-col items-center justify-center p-6">
               {loading.nextDay ? (
+                <Loader2 className="h-8 w-8 animate-spin text-gold-500" />
+              ) : nextDayPrediction ? (
                 <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Predicting...
+                  <div className="text-4xl font-bold text-gold-500 mb-2">
+                    {formatPrice(nextDayPrediction)}
+                  </div>
+                  <div className="flex items-center gap-1 text-green-400">
+                    <ArrowUpRight className="h-4 w-4" />
+                    <span>+2.3%</span>
+                  </div>
                 </>
               ) : (
-                <>
-                  <DollarSign className="mr-2 h-4 w-4" />
-                  Get Next Day Prediction
-                </>
+                <Button onClick={fetchNextDayPrediction} className="bg-gold-500 hover:bg-gold-600 text-slate-900">
+                  Get Prediction
+                </Button>
               )}
-            </Button>
-            
-            {nextDayPrediction && (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <h3 className="font-semibold text-green-800 mb-2">
-                  Tomorrow's Predicted Price
-                </h3>
-                <p className="text-2xl font-bold text-green-900">
-                  {formatPrice(nextDayPrediction)}
-                </p>
-                <p className="text-sm text-green-700">per ounce</p>
-              </div>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+            </div>
+          </CardContent>
+        </Card>
 
-      {/* 7-Day Predictions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="h-5 w-5" />
-            7-Day Forecast
-          </CardTitle>
-          <CardDescription>
-            Gold price predictions for the next week
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <Button 
-              onClick={fetchWeekPredictions}
-              disabled={loading.week || connectionStatus !== 'connected'}
-              className="w-full md:w-auto"
-            >
-              {loading.week ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Generating Forecast...
-                </>
-              ) : (
-                'Get 7-Day Forecast'
-              )}
-            </Button>
-            
-            {weekPredictions && (
-              <div className="space-y-4">
-                {/* Chart */}
-                <div className="h-64 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={weekChartData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis 
-                        dataKey="formattedDate" 
-                        tick={{ fontSize: 12 }}
-                        angle={-45}
-                        textAnchor="end"
-                        height={60}
-                      />
-                      <YAxis 
-                        domain={['dataMin - 10', 'dataMax + 10']}
-                        tick={{ fontSize: 12 }}
-                      />
-                      <Tooltip 
-                        formatter={(value: number) => [formatPrice(value), 'Price']}
-                        labelFormatter={(label) => `Date: ${label}`}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="price" 
-                        stroke="#f59e0b" 
-                        strokeWidth={2}
-                        dot={{ fill: '#f59e0b', strokeWidth: 2, r: 4 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-                
-                {/* Predictions Table */}
-                <div className="grid gap-2">
-                  <h4 className="font-semibold mb-2">Daily Predictions</h4>
-                  {weekPredictions.predictions?.map((price, index) => (
-                    <div 
-                      key={index}
-                      className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
-                    >
-                      <span className="font-medium">
-                        {formatDate(weekPredictions.dates?.[index] || '')}
-                      </span>
-                      <span className="font-bold text-orange-600">
-                        {formatPrice(price)}
-                      </span>
-                    </div>
-                  ))}
-                </div>
+        {/* Week Predictions */}
+        <Card className="bg-slate-800 border-slate-700">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <TrendingUp className="h-5 w-5 text-gold-500" />
+              Week Forecast
+            </CardTitle>
+            <CardDescription className="text-slate-400">
+              7-day price prediction trend
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            {loading.week ? (
+              <div className="flex justify-center p-6">
+                <Loader2 className="h-8 w-8 animate-spin text-gold-500" />
               </div>
+            ) : weekPredictions ? (
+              <div className="h-[300px] w-full">
+                <ResponsiveContainer>
+                  <LineChart data={weekChartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.grid} />
+                    <XAxis 
+                      dataKey="formattedDate" 
+                      stroke={chartTheme.text}
+                      tick={{ fill: chartTheme.text }}
+                    />
+                    <YAxis 
+                      stroke={chartTheme.text}
+                      tick={{ fill: chartTheme.text }}
+                      domain={['auto', 'auto']}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Line 
+                      type="monotone" 
+                      dataKey="price" 
+                      stroke={chartTheme.gold}
+                      strokeWidth={2}
+                      dot={{ fill: chartTheme.gold, r: 4 }}
+                      activeDot={{ r: 6, fill: chartTheme.goldLight }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <Button onClick={fetchWeekPredictions} className="w-full bg-gold-500 hover:bg-gold-600 text-slate-900">
+                Get Week Forecast
+              </Button>
             )}
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
 
-      {/* Custom Predictions */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Settings className="h-5 w-5" />
-            Custom Forecast
-          </CardTitle>
-          <CardDescription>
-            Predict gold prices for a custom number of days (1-30)
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-end gap-4">
-              <div className="flex-1 max-w-32">
-                <Label htmlFor="customDays">Days to predict</Label>
+        {/* Custom Range Predictions */}
+        <Card className="bg-slate-800 border-slate-700 md:col-span-2">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Settings className="h-5 w-5 text-gold-500" />
+              Custom Range Forecast
+            </CardTitle>
+            <CardDescription className="text-slate-400">
+              Predict gold prices for a custom number of days
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="flex gap-4 mb-6">
+              <div className="flex-1">
+                <Label htmlFor="days" className="text-slate-300">Number of Days</Label>
                 <Input
-                  id="customDays"
+                  id="days"
                   type="number"
+                  value={customDays}
+                  onChange={(e) => setCustomDays(parseInt(e.target.value))}
                   min={1}
                   max={30}
-                  value={customDays}
-                  onChange={(e) => setCustomDays(Number(e.target.value))}
+                  className="bg-slate-700 border-slate-600 text-white"
                 />
               </div>
               <Button 
                 onClick={fetchCustomPredictions}
-                disabled={loading.custom || connectionStatus !== 'connected' || customDays < 1 || customDays > 30}
+                disabled={loading.custom}
+                className="self-end bg-gold-500 hover:bg-gold-600 text-slate-900"
               >
                 {loading.custom ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Predicting...
-                  </>
+                  <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
-                  `Get ${customDays}-Day Forecast`
+                  'Get Forecast'
                 )}
               </Button>
             </div>
             
             {customPredictions && (
-              <div className="space-y-4">
-                {/* Chart */}
-                <div className="h-64 w-full">
-                  <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={customChartData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis 
-                        dataKey="formattedDate" 
-                        tick={{ fontSize: 12 }}
-                        angle={-45}
-                        textAnchor="end"
-                        height={60}
-                      />
-                      <YAxis 
-                        domain={['dataMin - 10', 'dataMax + 10']}
-                        tick={{ fontSize: 12 }}
-                      />
-                      <Tooltip 
-                        formatter={(value: number) => [formatPrice(value), 'Price']}
-                        labelFormatter={(label) => `Date: ${label}`}
-                      />
-                      <Line 
-                        type="monotone" 
-                        dataKey="price" 
-                        stroke="#10b981" 
-                        strokeWidth={2}
-                        dot={{ fill: '#10b981', strokeWidth: 2, r: 4 }}
-                      />
-                    </LineChart>
-                  </ResponsiveContainer>
-                </div>
-                
-                {/* Summary Stats */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                  <div className="bg-blue-50 p-3 rounded-lg">
-                    <p className="text-sm text-blue-600">Highest</p>
-                    <p className="font-bold text-blue-900">
-                      {formatPrice(Math.max(...(customPredictions.predictions || [])))}
-                    </p>
-                  </div>
-                  <div className="bg-red-50 p-3 rounded-lg">
-                    <p className="text-sm text-red-600">Lowest</p>
-                    <p className="font-bold text-red-900">
-                      {formatPrice(Math.min(...(customPredictions.predictions || [])))}
-                    </p>
-                  </div>
-                  <div className="bg-green-50 p-3 rounded-lg">
-                    <p className="text-sm text-green-600">Average</p>
-                    <p className="font-bold text-green-900">
-                      {formatPrice((customPredictions.predictions || []).reduce((a, b) => a + b, 0) / (customPredictions.predictions?.length || 1))}
-                    </p>
-                  </div>
-                  <div className="bg-purple-50 p-3 rounded-lg">
-                    <p className="text-sm text-purple-600">Days</p>
-                    <p className="font-bold text-purple-900">
-                      {customPredictions.days_predicted || customDays}
-                    </p>
-                  </div>
-                </div>
+              <div className="h-[400px] w-full">
+                <ResponsiveContainer>
+                  <LineChart data={customChartData}>
+                    <CartesianGrid strokeDasharray="3 3" stroke={chartTheme.grid} />
+                    <XAxis 
+                      dataKey="formattedDate" 
+                      stroke={chartTheme.text}
+                      tick={{ fill: chartTheme.text }}
+                      angle={-45}
+                      textAnchor="end"
+                      height={60}
+                    />
+                    <YAxis 
+                      stroke={chartTheme.text}
+                      tick={{ fill: chartTheme.text }}
+                      domain={['auto', 'auto']}
+                    />
+                    <Tooltip content={<CustomTooltip />} />
+                    <Line 
+                      type="monotone" 
+                      dataKey="price" 
+                      stroke={chartTheme.gold}
+                      strokeWidth={2}
+                      dot={{ fill: chartTheme.gold, r: 4 }}
+                      activeDot={{ r: 6, fill: chartTheme.goldLight }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             )}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Usage Instructions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>How to Use</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2 text-sm text-gray-600">
-            <p>1. <strong>Connection Status:</strong> Ensure the backend is connected before making predictions</p>
-            <p>2. <strong>Next Day Prediction:</strong> Get a single prediction for tomorrow's gold price</p>
-            <p>3. <strong>7-Day Forecast:</strong> View predicted prices for the next week with interactive charts</p>
-            <p>4. <strong>Custom Forecast:</strong> Choose any number of days (1-30) for predictions with detailed analytics</p>
-            <p className="text-xs text-gray-500 mt-4">
-              * Predictions are based on historical data and machine learning. Not financial advice.
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Calendar, Database, RefreshCw, Wifi, WifiOff } from 'lucide-react';
 import { getHistoricalGoldData, HistoricalData as HistoricalDataType } from '@/services/metalsApi';
@@ -55,8 +54,8 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
   const dataToDisplay = historicalData.length > 0 ? historicalData : mockHistoricalData;
 
   return (
-    <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-yellow-500/20 p-6">
-      <div className="flex items-center justify-between mb-6">
+    <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-yellow-500/20 p-6 overflow-x-auto max-w-full">
+      <div className="flex items-center justify-between mb-6 w-full">
         <div className="flex items-center space-x-3">
           <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg flex items-center justify-center">
             <Database size={20} className="text-white" />
@@ -91,7 +90,7 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
       </div>
 
       {/* Historical Ranges */}
-      <div className="space-y-4 mb-6">
+      <div className="space-y-4 mb-6 w-full">
         <h4 className="text-lg font-semibold text-yellow-400 flex items-center space-x-2">
           <Calendar size={16} />
           <span>Price Ranges</span>
@@ -128,7 +127,7 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
 
       {/* Recent Price Updates */}
       {recentPrices.length > 0 && (
-        <div className="mb-4">
+        <div className="mb-4 w-full">
           <h4 className="text-lg font-semibold text-yellow-400 mb-3">Recent Updates</h4>
           <div className="space-y-2">
             {recentPrices.map((price, index) => (
@@ -142,7 +141,7 @@ export const HistoricalData: React.FC<HistoricalDataProps> = ({ priceHistory }) 
       )}
 
       {/* Status Footer */}
-      <div className="flex items-center justify-between text-xs text-slate-500 border-t border-slate-700/50 pt-3">
+      <div className="flex items-center justify-between text-xs text-slate-500 border-t border-slate-700/50 pt-3 w-full">
         <div className="flex items-center space-x-2">
           <div className={`w-2 h-2 rounded-full ${isOnline ? 'bg-green-400' : 'bg-yellow-400'}`} />
           <span>

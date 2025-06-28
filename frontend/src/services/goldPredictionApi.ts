@@ -1,5 +1,10 @@
+import axios from 'axios';
+
 // API configuration
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://192.168.50.219:5000/';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+// Debug: Log the API base URL
+console.log('🔧 API Base URL configured as:', API_BASE_URL);
 
 export interface PredictionResponse {
   success: boolean;
@@ -31,7 +36,28 @@ export interface HealthCheck {
   model_loaded: boolean;
 }
 
-class GoldPredictionAPI {
+interface ScenarioParams {
+  interest_rate_change: number;
+  inflation_change: number;
+  dollar_strength_change: number;
+  market_volatility: number;
+  geopolitical_risk: number;
+  days: number;
+}
+
+interface ScenarioPredictionResponse {
+  success: boolean;
+  base_predictions: number[];
+  scenario_predictions: number[];
+  dates: string[];
+  currency: string;
+  unit: string;
+  model_type: string;
+  days_predicted: number;
+  scenario_params: ScenarioParams;
+}
+
+export class GoldPredictionAPI {
   private baseURL: string;
 
   constructor() {
@@ -40,7 +66,7 @@ class GoldPredictionAPI {
 
   async getNextDayPrediction(): Promise<PredictionResponse> {
     try {
-      const response = await fetch(`${this.baseURL}/predict/next`);
+      const response = await fetch(`${this.baseURL}/api/predict/next`);
       const data = await response.json();
       
       if (!response.ok) {
@@ -56,7 +82,7 @@ class GoldPredictionAPI {
 
   async getWeekPredictions(): Promise<PredictionResponse> {
     try {
-      const response = await fetch(`${this.baseURL}/predict/week`);
+      const response = await fetch(`${this.baseURL}/api/predict/week`);
       const data = await response.json();
       
       if (!response.ok) {
@@ -72,7 +98,7 @@ class GoldPredictionAPI {
 
   async getCustomPredictions(days: number): Promise<PredictionResponse> {
     try {
-      const response = await fetch(`${this.baseURL}/predict/custom`, {
+      const response = await fetch(`${this.baseURL}/api/predict/custom`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -95,7 +121,7 @@ class GoldPredictionAPI {
 
   async getModelInfo(): Promise<ModelInfo> {
     try {
-      const response = await fetch(`${this.baseURL}/model/info`);
+      const response = await fetch(`${this.baseURL}/api/model/info`);
       const data = await response.json();
       
       if (!response.ok) {
@@ -111,8 +137,10 @@ class GoldPredictionAPI {
 
   async healthCheck(): Promise<HealthCheck> {
     try {
-      console.log(`Making health check request to: ${this.baseURL}/health`);
-      const response = await fetch(`${this.baseURL}/health`);
+      const healthUrl = `${this.baseURL}/api/health`;
+      console.log(`🔧 Making health check request to: ${healthUrl}`);
+      console.log(`🔧 Base URL: ${this.baseURL}`);
+      const response = await fetch(healthUrl);
       
       console.log(`Health check response status: ${response.status}`);
       
@@ -138,7 +166,7 @@ class GoldPredictionAPI {
       
       // First try a simple test endpoint
       try {
-        const testResponse = await fetch(`${this.baseURL}/test`);
+        const testResponse = await fetch(`${this.baseURL}/api/test`);
         if (testResponse.ok) {
           console.log('Test endpoint successful');
           return true;
@@ -163,9 +191,9 @@ class GoldPredictionAPI {
     error?: string;
   }> {
     const endpoints = [
-      `${this.baseURL}/test`,
-      `${this.baseURL}/health`,
-      `${this.baseURL.replace('/api', '')}/` // Try root endpoint
+      `${this.baseURL}/api/test`,
+      `${this.baseURL}/api/health`,
+      `${this.baseURL}/` // Try root endpoint
     ];
     
     for (const endpoint of endpoints) {
@@ -188,6 +216,16 @@ class GoldPredictionAPI {
       endpoints: endpoints,
       error: 'No accessible endpoints found'
     };
+  }
+
+  async predictScenario(params: ScenarioParams): Promise<ScenarioPredictionResponse> {
+    try {
+      const response = await axios.post(`${this.baseURL}/api/predict/scenario`, params);
+      return response.data;
+    } catch (error) {
+      console.error('Error predicting scenario:', error);
+      throw error;
+    }
   }
 }
 

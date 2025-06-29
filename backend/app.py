@@ -272,13 +272,11 @@ def root():
     })
 
 if __name__ == '__main__':
-    # Load the model when the app starts
-    if load_model_and_data():
-        print("Model and data loaded successfully")
-    else:
+    # Load model at startup
+    if not load_model_and_data():
         print("Failed to load model and data")
     
-    # Get port from environment variable for Render deployment
+    # Get port from environment variable or use default
     port = int(os.environ.get('PORT', 5000))
     
     # Run the app

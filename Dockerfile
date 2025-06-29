@@ -18,10 +18,10 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the model files first to ensure they exist
-COPY backend/models/gold_price_lstm_model.h5 backend/models/
-COPY backend/models/gold_price_scaler.pkl backend/models/
-COPY backend/data/last_60_prices.npy backend/data/
+# Copy model files first
+COPY gold_price_lstm_model.h5 backend/models/
+COPY gold_price_scaler.pkl backend/models/
+COPY last_60_prices.npy backend/data/
 
 # Copy the rest of the application
 COPY . .

@@ -39,7 +39,10 @@ dataset/
 !.vscode/tasks.json
 !**/components.json
 
-
+# Model files - do not ignore
+!backend/models/*.h5
+!backend/models/*.pkl
+!backend/data/*.npy
 
 # Python
 __pycache__/

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API configuration
-const API_BASE_URL = (import.meta.env.VITE_API_URL || 'https://sonar-g.onrender.com').replace(/\/+$/, '');
+const API_BASE_URL = 'http://localhost:5000';
 
 // Debug: Log the API base URL
 console.log('🔧 API Base URL configured as:', API_BASE_URL);

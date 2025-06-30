@@ -8,7 +8,7 @@ import os
 
 app = Flask(__name__)
 
-# Configure CORS for production
+# Configure CORS for production and development
 CORS(app, resources={
     r"/*": {  # Allow CORS for all routes
         "origins": [
@@ -33,10 +33,28 @@ CORS(app, resources={
 # Add CORS headers to all responses
 @app.after_request
 def after_request(response):
-    response.headers.add('Access-Control-Allow-Origin', 'https://sonar-g.vercel.app')
-    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-    response.headers.add('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
-    response.headers.add('Access-Control-Allow-Credentials', 'true')
+    # Get the origin from the request
+    origin = request.headers.get('Origin')
+    
+    # List of allowed origins
+    allowed_origins = [
+        "http://localhost:5173",
+        "http://localhost:8080",
+        "http://localhost:8081",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5173",
+        "http://localhost:5000",
+        "https://sonar-g.vercel.app",
+        "https://sonar-g-git-main-ayush-yadav11.vercel.app"
+    ]
+    
+    # If the origin is in our list of allowed origins, set it in the response
+    if origin in allowed_origins:
+        response.headers.add('Access-Control-Allow-Origin', origin)
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'GET,POST,OPTIONS')
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
+    
     return response
 
 # Add logging to see what requests are coming in
